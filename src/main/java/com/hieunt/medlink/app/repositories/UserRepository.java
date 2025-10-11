@@ -35,6 +35,9 @@ public interface UserRepository extends BaseRepository<UserEntity, Long> {
                 inner join user_roles ur on u.id = ur.user_id
                 where u.username ilike concat('%', :keyword, '%')
                     or u.email ilike concat('%', :keyword, '%')
+                    and u.role <> 'super_admin'
+                    and u.role <> 'admin'
+                    and u.status = 'active'
     """, nativeQuery = true)
     Page<UserResponse> filterUsers(@Param("keyword") String keyword, Pageable pageable);
 

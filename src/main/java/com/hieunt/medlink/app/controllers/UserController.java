@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/create")
+    @PostMapping("/")
     public ResponseEntity<BaseResponse<UserResponse>> createUser(@RequestBody UserCreateRequest user) {
         try {
             BaseResponse<UserResponse> response = userService.createUser(user);
