@@ -17,4 +17,24 @@ public class PatientAllergiesMapper {
         entity.setNotes(request.getNotes());
         return entity;
     }
+
+    public PatientAllergiesEntity toEntity(PatientAllergiesRequest request, PatientAllergiesEntity entity) {
+        if (request == null) {
+            return entity;
+        }
+
+        if (request.getAllergyName() != null) {
+            entity.setAllergyName(request.getAllergyName());
+        }
+
+        if (request.getSeverity() != null) {
+            entity.setSeverity(request.getSeverity());
+        }
+
+        if (request.getNotes() != null) {
+            entity.setNotes(request.getNotes());
+        }
+
+        return entity;
+    }
 }

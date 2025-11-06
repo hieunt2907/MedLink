@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "patient_allergies")
@@ -22,6 +24,7 @@ public class PatientAllergiesEntity {
     private String allergyName;
 
     @Column(name = "severity")
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     private Severity severity;
 
     @Column(name = "notes", columnDefinition = "TEXT")

@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/patient/patients")
+@RequestMapping("/api/v1/patient/patients/profile")
 @RequiredArgsConstructor
 public class PatientProfileController {
     private final PatientProfileService patientProfileService;
@@ -24,7 +24,7 @@ public class PatientProfileController {
         }
     }
 
-    @GetMapping("/me")
+    @GetMapping("/")
     public ResponseEntity<BaseResponse<PatientProfilesEntity>> getMe() {
         try {
             BaseResponse<PatientProfilesEntity> response = patientProfileService.getMe();
@@ -34,7 +34,7 @@ public class PatientProfileController {
         }
     }
 
-    @PutMapping("/me")
+    @PutMapping("/")
     public ResponseEntity<BaseResponse<PatientProfilesEntity>> updateMe(@RequestBody PatientProfileRequest request ) {
         try {
             BaseResponse<PatientProfilesEntity> response = patientProfileService.updateMe(request);
