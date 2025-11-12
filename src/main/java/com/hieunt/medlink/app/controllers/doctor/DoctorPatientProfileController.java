@@ -27,7 +27,7 @@ public class DoctorPatientProfileController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<BaseResponse<Page<PatientProfilesEntity>>> filterPatientProfiles(@RequestParam(required = false) String keyword,@PageableDefault(size = 20) Pageable pageable) {
+    public ResponseEntity<BaseResponse<Page<PatientProfilesEntity>>> filterPatientProfiles(@RequestParam(required = false) String keyword, @PageableDefault(size = 20) Pageable pageable) {
         try {
             BaseResponse<Page<PatientProfilesEntity>> response = patientProfileService.filterPatientProfiles(keyword, pageable);
             return ResponseEntity.ok(response);

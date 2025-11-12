@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class PatientProfileServiceImpl implements PatientProfileService{
+public class PatientProfileServiceImpl implements PatientProfileService {
     private final PatientProfileRepository patientProfileRepository;
     private final PatientProfileMapper patientProfileMapper;
     private final GetCurrentUser getCurrentUser;
@@ -37,8 +37,7 @@ public class PatientProfileServiceImpl implements PatientProfileService{
     @Override
     public BaseResponse<PatientProfilesEntity> getPatientProfile(Long id) {
         try {
-            PatientProfilesEntity patient = patientProfileRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("patient profile not found"));
+            PatientProfilesEntity patient = patientProfileRepository.findById(id).orElseThrow(() -> new RuntimeException("patient profile not found"));
             return new BaseResponse<>("getting patient profile successfully", patient);
         } catch (Exception e) {
             throw new RuntimeException("error getting patient profile: " + e.getMessage(), e);

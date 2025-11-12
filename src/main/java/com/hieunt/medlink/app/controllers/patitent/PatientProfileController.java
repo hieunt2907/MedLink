@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class PatientProfileController {
     private final PatientProfileService patientProfileService;
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<BaseResponse<PatientProfilesEntity>> createPatientProfile(PatientProfileRequest request ) {
         try {
             BaseResponse<PatientProfilesEntity> response = patientProfileService.createPatientProfile(request);

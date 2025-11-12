@@ -8,11 +8,17 @@ import org.springframework.data.domain.Pageable;
 
 public interface PatientProfileService {
     BaseResponse<PatientProfilesEntity> createPatientProfile(PatientProfileRequest request);
+
     BaseResponse<PatientProfilesEntity> updatePatientProfile(Long id, PatientProfileRequest request);
+
     BaseResponse<PatientProfilesEntity> deletePatientProfile(Long id);
+
     BaseResponse<PatientProfilesEntity> getPatientProfile(Long id);
+
     BaseResponse<PatientProfilesEntity> getMe();
+
     BaseResponse<PatientProfilesEntity> updateMe(PatientProfileRequest request);
+
     BaseResponse<Page<PatientProfilesEntity>> filterPatientProfiles(String keyword, Pageable pageable);
 
 }
