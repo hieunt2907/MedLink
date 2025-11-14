@@ -1,12 +1,9 @@
 package com.hieunt.medlink.app.controllers.patitent;
 
 import com.hieunt.medlink.app.entities.PatientAllergiesEntity;
-import com.hieunt.medlink.app.entities.PatientProfilesEntity;
 import com.hieunt.medlink.app.requests.patient.PatientAllergiesRequest;
-import com.hieunt.medlink.app.requests.patient.PatientProfileRequest;
 import com.hieunt.medlink.app.responses.BaseResponse;
 import com.hieunt.medlink.app.services.patient.PatientAllergiesService;
-import com.hieunt.medlink.app.services.patient.PatientProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +19,7 @@ public class PatientAllergyController {
 
 
     @PostMapping("/")
-    public ResponseEntity<BaseResponse<PatientAllergiesEntity>> createPatientAllergy(@RequestBody PatientAllergiesRequest request ) {
+    public ResponseEntity<BaseResponse<PatientAllergiesEntity>> createPatientAllergy(@RequestBody PatientAllergiesRequest request) {
         try {
             BaseResponse<PatientAllergiesEntity> response = patientAllergiesService.createPatientAllergy(request);
             return ResponseEntity.ok(response);
@@ -32,7 +29,7 @@ public class PatientAllergyController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<BaseResponse<Page<PatientAllergiesEntity>>> getMyAllergies(@PageableDefault(size = 20)Pageable pageable) {
+    public ResponseEntity<BaseResponse<Page<PatientAllergiesEntity>>> getMyAllergies(@PageableDefault(size = 20) Pageable pageable) {
         try {
             BaseResponse<Page<PatientAllergiesEntity>> response = patientAllergiesService.filterMyAllergies(pageable);
             return ResponseEntity.ok(response);
@@ -42,7 +39,7 @@ public class PatientAllergyController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BaseResponse<PatientAllergiesEntity>> updatePatientAllergy(@PathVariable Long id, @RequestBody PatientAllergiesRequest request ) {
+    public ResponseEntity<BaseResponse<PatientAllergiesEntity>> updatePatientAllergy(@PathVariable Long id, @RequestBody PatientAllergiesRequest request) {
         try {
             BaseResponse<PatientAllergiesEntity> response = patientAllergiesService.updatePatientAllergy(id, request);
             return ResponseEntity.ok(response);

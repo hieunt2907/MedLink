@@ -18,7 +18,6 @@ public class AdminPatientAllergyController {
     private final PatientAllergiesService patientAllergiesService;
 
 
-
     @GetMapping("/{profileId}")
     public ResponseEntity<BaseResponse<Page<PatientAllergiesEntity>>> filterPatientAllergies(@PathVariable Long profileId, @PageableDefault(size = 20) Pageable pageable) {
         try {

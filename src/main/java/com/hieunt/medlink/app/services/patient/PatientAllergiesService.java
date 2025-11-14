@@ -8,9 +8,14 @@ import org.springframework.data.domain.Pageable;
 
 public interface PatientAllergiesService {
     BaseResponse<PatientAllergiesEntity> createPatientAllergy(PatientAllergiesRequest request);
+
     BaseResponse<PatientAllergiesEntity> updatePatientAllergy(Long id, PatientAllergiesRequest request);
+
     BaseResponse<PatientAllergiesEntity> deletePatientAllergy(Long id);
+
     BaseResponse<Page<PatientAllergiesEntity>> filterMyAllergies(Pageable pageable);
+
     BaseResponse<Page<PatientAllergiesEntity>> filterAllergies(Long patientProfileId, Pageable pageable);
+
     BaseResponse<PatientAllergiesEntity> getPatientAllergy(Long id);
 }

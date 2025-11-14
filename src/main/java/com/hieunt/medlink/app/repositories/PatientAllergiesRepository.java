@@ -10,14 +10,14 @@ public interface PatientAllergiesRepository extends BaseRepository<PatientAllerg
     PatientAllergiesEntity findByPatientProfileId(Long patientProfileId);
 
     @Query(value = """
-        select 
-            pa.id             as id,
-            pa.patient_profile_id as patientProfileId,
-            pa.allergy_name   as allergyName,
-            pa.severity       as severity,
-            pa.notes          as notes
-        from patient_allergies pa
-        where pa.patient_profile_id = :id
-    """, nativeQuery = true)
+                select
+                    pa.id             as id,
+                    pa.patient_profile_id as patientProfileId,
+                    pa.allergy_name   as allergyName,
+                    pa.severity       as severity,
+                    pa.notes          as notes
+                from patient_allergies pa
+                where pa.patient_profile_id = :id
+            """, nativeQuery = true)
     Page<PatientAllergiesEntity> filterAllergies(@Param("id") Long patientProfileId, Pageable pageable);
 }

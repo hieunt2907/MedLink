@@ -75,8 +75,7 @@ public class PatientAllergiesServiceImpl implements PatientAllergiesService {
     @Override
     public BaseResponse<PatientAllergiesEntity> deletePatientAllergy(Long id) {
         try {
-            PatientAllergiesEntity allergy = patientAllergiesRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("patient allergy not found"));
+            PatientAllergiesEntity allergy = patientAllergiesRepository.findById(id).orElseThrow(() -> new RuntimeException("patient allergy not found"));
             patientAllergiesRepository.delete(allergy);
             return new BaseResponse<>("deleting patient allergy successfully", allergy);
         } catch (Exception e) {
@@ -97,8 +96,7 @@ public class PatientAllergiesServiceImpl implements PatientAllergiesService {
     @Override
     public BaseResponse<PatientAllergiesEntity> getPatientAllergy(Long id) {
         try {
-            PatientAllergiesEntity allergy = patientAllergiesRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("patient allergy not found"));
+            PatientAllergiesEntity allergy = patientAllergiesRepository.findById(id).orElseThrow(() -> new RuntimeException("patient allergy not found"));
             return new BaseResponse<>("getting patient allergy successfully", allergy);
         } catch (Exception e) {
             throw new RuntimeException("error getting patient allergy: " + e.getMessage(), e);
