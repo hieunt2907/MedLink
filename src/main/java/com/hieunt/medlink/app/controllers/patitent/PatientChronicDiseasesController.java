@@ -19,8 +19,7 @@ public class PatientChronicDiseasesController {
     private final PatientChronicDiseasesService chronicDiseasesService;
 
     @PostMapping("/")
-    public ResponseEntity<BaseResponse<PatientChronicDiseasesEntity>> createChronicDisease(
-            @RequestBody PatientChronicDiseaseRequest request) {
+    public ResponseEntity<BaseResponse<PatientChronicDiseasesEntity>> createChronicDisease(@RequestBody PatientChronicDiseaseRequest request) {
         try {
             BaseResponse<PatientChronicDiseasesEntity> response = chronicDiseasesService.createChronicDisease(request);
             return ResponseEntity.ok(response);
@@ -30,8 +29,7 @@ public class PatientChronicDiseasesController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<BaseResponse<Page<PatientChronicDiseasesEntity>>> getMyChronicDiseases(
-            @PageableDefault(size = 20) Pageable pageable) {
+    public ResponseEntity<BaseResponse<Page<PatientChronicDiseasesEntity>>> getMyChronicDiseases(@PageableDefault(size = 20) Pageable pageable) {
         try {
             BaseResponse<Page<PatientChronicDiseasesEntity>> response = chronicDiseasesService.filterMyChronicDiseases(pageable);
             return ResponseEntity.ok(response);
@@ -41,9 +39,7 @@ public class PatientChronicDiseasesController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BaseResponse<PatientChronicDiseasesEntity>> updateChronicDisease(
-            @PathVariable Long id,
-            @RequestBody PatientChronicDiseaseRequest request) {
+    public ResponseEntity<BaseResponse<PatientChronicDiseasesEntity>> updateChronicDisease(@PathVariable Long id, @RequestBody PatientChronicDiseaseRequest request) {
         try {
             BaseResponse<PatientChronicDiseasesEntity> response = chronicDiseasesService.updateChronicDisease(id, request);
             return ResponseEntity.ok(response);

@@ -28,8 +28,7 @@ public class PatientChronicDiseasesServiceImpl implements PatientChronicDiseases
         try {
             UserEntity user = getCurrentUser.getCurrentUser();
             PatientProfilesEntity patientProfile = patientProfileRepository.findByUserId(user.getId());
-            if (patientProfile == null)
-                throw new RuntimeException("patient profile not found for the current user");
+            if (patientProfile == null) throw new RuntimeException("patient profile not found for the current user");
 
             PatientChronicDiseasesEntity entity = mapper.toEntity(request);
             entity.setPatientProfileId(patientProfile.getId());
@@ -57,8 +56,7 @@ public class PatientChronicDiseasesServiceImpl implements PatientChronicDiseases
     @Override
     public BaseResponse<PatientChronicDiseasesEntity> deleteChronicDisease(Long id) {
         try {
-            PatientChronicDiseasesEntity entity = chronicDiseasesRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("chronic disease not found"));
+            PatientChronicDiseasesEntity entity = chronicDiseasesRepository.findById(id).orElseThrow(() -> new RuntimeException("chronic disease not found"));
             chronicDiseasesRepository.delete(entity);
 
             return new BaseResponse<>("deleting chronic disease successfully", entity);
@@ -72,11 +70,9 @@ public class PatientChronicDiseasesServiceImpl implements PatientChronicDiseases
         try {
             UserEntity user = getCurrentUser.getCurrentUser();
             PatientProfilesEntity patientProfile = patientProfileRepository.findByUserId(user.getId());
-            if (patientProfile == null)
-                throw new RuntimeException("patient profile not found for the current user");
+            if (patientProfile == null) throw new RuntimeException("patient profile not found for the current user");
 
-            Page<PatientChronicDiseasesEntity> result =
-                    chronicDiseasesRepository.filterChronicDiseases(patientProfile.getId(), pageable);
+            Page<PatientChronicDiseasesEntity> result = chronicDiseasesRepository.filterChronicDiseases(patientProfile.getId(), pageable);
 
             return new BaseResponse<>("filtering chronic diseases successfully", result);
 
@@ -88,8 +84,7 @@ public class PatientChronicDiseasesServiceImpl implements PatientChronicDiseases
     @Override
     public BaseResponse<Page<PatientChronicDiseasesEntity>> filterChronicDiseases(Long patientProfileId, Pageable pageable) {
         try {
-            Page<PatientChronicDiseasesEntity> result =
-                    chronicDiseasesRepository.filterChronicDiseases(patientProfileId, pageable);
+            Page<PatientChronicDiseasesEntity> result = chronicDiseasesRepository.filterChronicDiseases(patientProfileId, pageable);
 
             return new BaseResponse<>("filtering chronic diseases successfully", result);
         } catch (Exception e) {
@@ -100,8 +95,7 @@ public class PatientChronicDiseasesServiceImpl implements PatientChronicDiseases
     @Override
     public BaseResponse<PatientChronicDiseasesEntity> getChronicDisease(Long id) {
         try {
-            PatientChronicDiseasesEntity entity = chronicDiseasesRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("chronic disease not found"));
+            PatientChronicDiseasesEntity entity = chronicDiseasesRepository.findById(id).orElseThrow(() -> new RuntimeException("chronic disease not found"));
 
             return new BaseResponse<>("getting chronic disease successfully", entity);
         } catch (Exception e) {

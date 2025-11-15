@@ -18,30 +18,24 @@ public class AdminPatientChronicDiseasesController {
     private final PatientChronicDiseasesService chronicDiseasesService;
 
     @GetMapping("/{profileId}")
-    public ResponseEntity<BaseResponse<Page<PatientChronicDiseasesEntity>>> filterPatientChronicDiseases(
-            @PathVariable Long profileId,
-            @PageableDefault(size = 20) Pageable pageable) {
+    public ResponseEntity<BaseResponse<Page<PatientChronicDiseasesEntity>>> filterPatientChronicDiseases(@PathVariable Long profileId, @PageableDefault(size = 20) Pageable pageable) {
         try {
-            BaseResponse<Page<PatientChronicDiseasesEntity>> response =
-                    chronicDiseasesService.filterChronicDiseases(profileId, pageable);
+            BaseResponse<Page<PatientChronicDiseasesEntity>> response = chronicDiseasesService.filterChronicDiseases(profileId, pageable);
 
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.badRequest()
-                    .body(new BaseResponse<>(e.getMessage(), null));
+            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
         }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<BaseResponse<PatientChronicDiseasesEntity>> deletePatientChronicDisease(@PathVariable Long id) {
         try {
-            BaseResponse<PatientChronicDiseasesEntity> response =
-                    chronicDiseasesService.deleteChronicDisease(id);
+            BaseResponse<PatientChronicDiseasesEntity> response = chronicDiseasesService.deleteChronicDisease(id);
 
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.badRequest()
-                    .body(new BaseResponse<>(e.getMessage(), null));
+            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
         }
     }
 }
