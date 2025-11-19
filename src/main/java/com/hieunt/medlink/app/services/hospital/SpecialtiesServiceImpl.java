@@ -6,6 +6,7 @@ import com.hieunt.medlink.app.repositories.SpecialtiesRepository;
 import com.hieunt.medlink.app.requests.hospital.SpecialtyRequest;
 import com.hieunt.medlink.app.responses.BaseResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -61,7 +62,13 @@ public class SpecialtiesServiceImpl implements SpecialtiesService{
     }
 
     @Override
-    public BaseResponse<SpecialtiesEntity> filterSpecialties(String keyword, Pageable pageable) {
-        return null;
+    public BaseResponse<Page<SpecialtiesEntity>> filterSpecialties(Long hospitalId, Pageable pageable) {
+        try {
+            // Implement filtering logic here
+            Page<SpecialtiesEntity> specialtiesEntities = specialtiesRepository.filterSpecialties(hospitalId, pageable);
+            return new BaseResponse<>("filtering specialties successfully", specialtiesEntities);
+        } catch (Exception e) {
+            throw new RuntimeException("error filtering specialties: " + e.getMessage(), e);
+        }
     }
 }
