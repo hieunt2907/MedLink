@@ -21,51 +21,31 @@ public class AdminPatientProfileController {
 
     @GetMapping("/{profileId}")
     public ResponseEntity<BaseResponse<PatientProfilesEntity>> getPatientProfile(@PathVariable Long profileId) {
-        try {
-            BaseResponse<PatientProfilesEntity> response = patientProfileService.getPatientProfile(profileId);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+        BaseResponse<PatientProfilesEntity> response = patientProfileService.getPatientProfile(profileId);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/")
     public ResponseEntity<BaseResponse<Page<PatientProfilesEntity>>> filterPatientProfiles(@RequestParam(required = false) String keyword, Pageable pageable) {
-        try {
-            BaseResponse<Page<PatientProfilesEntity>> response = patientProfileService.filterPatientProfiles(keyword, pageable);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+        BaseResponse<Page<PatientProfilesEntity>> response = patientProfileService.filterPatientProfiles(keyword, pageable);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<BaseResponse<PatientProfilesEntity>> deletePatientProfile(@PathVariable Long id) {
-        try {
-            BaseResponse<PatientProfilesEntity> response = patientProfileService.deletePatientProfile(id);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+        BaseResponse<PatientProfilesEntity> response = patientProfileService.deletePatientProfile(id);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("{profileId}/allergies")
     public ResponseEntity<BaseResponse<Page<PatientAllergiesEntity>>> filterPatientAllergies(@PathVariable Long profileId, Pageable pageable) {
-        try {
-            BaseResponse<Page<PatientAllergiesEntity>> response = patientAllergiesService.filterAllergies(profileId, pageable);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+        BaseResponse<Page<PatientAllergiesEntity>> response = patientAllergiesService.filterAllergies(profileId, pageable);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("{profileId}/allergies/{allergyId}")
     public ResponseEntity<BaseResponse<PatientAllergiesEntity>> deletePatientAllergy(@PathVariable Long profileId, @PathVariable Long allergyId) {
-        try {
-            BaseResponse<PatientAllergiesEntity> response = patientAllergiesService.deletePatientAllergy(allergyId);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+        BaseResponse<PatientAllergiesEntity> response = patientAllergiesService.deletePatientAllergy(allergyId);
+        return ResponseEntity.ok(response);
     }
 }

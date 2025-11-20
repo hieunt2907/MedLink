@@ -18,21 +18,14 @@ public class DoctorPatientProfileController {
 
     @GetMapping("/{id}")
     public ResponseEntity<BaseResponse<PatientProfilesEntity>> getPatientProfile(@PathVariable Long id) {
-        try {
-            BaseResponse<PatientProfilesEntity> response = patientProfileService.getPatientProfile(id);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+        BaseResponse<PatientProfilesEntity> response = patientProfileService.getPatientProfile(id);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/")
     public ResponseEntity<BaseResponse<Page<PatientProfilesEntity>>> filterPatientProfiles(@RequestParam(required = false) String keyword, @PageableDefault(size = 20) Pageable pageable) {
-        try {
-            BaseResponse<Page<PatientProfilesEntity>> response = patientProfileService.filterPatientProfiles(keyword, pageable);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+
+        BaseResponse<Page<PatientProfilesEntity>> response = patientProfileService.filterPatientProfiles(keyword, pageable);
+        return ResponseEntity.ok(response);
     }
 }

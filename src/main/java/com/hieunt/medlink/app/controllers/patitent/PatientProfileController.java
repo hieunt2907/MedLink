@@ -15,32 +15,20 @@ public class PatientProfileController {
     private final PatientProfileService patientProfileService;
 
     @PostMapping("/")
-    public ResponseEntity<BaseResponse<PatientProfilesEntity>> createPatientProfile(PatientProfileRequest request ) {
-        try {
-            BaseResponse<PatientProfilesEntity> response = patientProfileService.createPatientProfile(request);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+    public ResponseEntity<BaseResponse<PatientProfilesEntity>> createPatientProfile(PatientProfileRequest request) {
+        BaseResponse<PatientProfilesEntity> response = patientProfileService.createPatientProfile(request);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/")
     public ResponseEntity<BaseResponse<PatientProfilesEntity>> getMe() {
-        try {
-            BaseResponse<PatientProfilesEntity> response = patientProfileService.getMe();
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+        BaseResponse<PatientProfilesEntity> response = patientProfileService.getMe();
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/")
-    public ResponseEntity<BaseResponse<PatientProfilesEntity>> updateMe(@RequestBody PatientProfileRequest request ) {
-        try {
-            BaseResponse<PatientProfilesEntity> response = patientProfileService.updateMe(request);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+    public ResponseEntity<BaseResponse<PatientProfilesEntity>> updateMe(@RequestBody PatientProfileRequest request) {
+        BaseResponse<PatientProfilesEntity> response = patientProfileService.updateMe(request);
+        return ResponseEntity.ok(response);
     }
 }
