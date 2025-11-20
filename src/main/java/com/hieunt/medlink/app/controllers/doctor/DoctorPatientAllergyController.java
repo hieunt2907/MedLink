@@ -21,11 +21,7 @@ public class DoctorPatientAllergyController {
 
     @GetMapping("/{profileId}")
     public ResponseEntity<BaseResponse<Page<PatientAllergiesEntity>>> filterPatientAllergies(@PathVariable Long profileId, @PageableDefault(size = 20) Pageable pageable) {
-        try {
-            BaseResponse<Page<PatientAllergiesEntity>> response = patientAllergiesService.filterAllergies(profileId, pageable);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+        BaseResponse<Page<PatientAllergiesEntity>> response = patientAllergiesService.filterAllergies(profileId, pageable);
+        return ResponseEntity.ok(response);
     }
 }

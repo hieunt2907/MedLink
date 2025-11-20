@@ -20,41 +20,25 @@ public class PatientAllergyController {
 
     @PostMapping("/")
     public ResponseEntity<BaseResponse<PatientAllergiesEntity>> createPatientAllergy(@RequestBody PatientAllergiesRequest request) {
-        try {
-            BaseResponse<PatientAllergiesEntity> response = patientAllergiesService.createPatientAllergy(request);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+        BaseResponse<PatientAllergiesEntity> response = patientAllergiesService.createPatientAllergy(request);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/")
     public ResponseEntity<BaseResponse<Page<PatientAllergiesEntity>>> getMyAllergies(@PageableDefault(size = 20) Pageable pageable) {
-        try {
-            BaseResponse<Page<PatientAllergiesEntity>> response = patientAllergiesService.filterMyAllergies(pageable);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+        BaseResponse<Page<PatientAllergiesEntity>> response = patientAllergiesService.filterMyAllergies(pageable);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<BaseResponse<PatientAllergiesEntity>> updatePatientAllergy(@PathVariable Long id, @RequestBody PatientAllergiesRequest request) {
-        try {
-            BaseResponse<PatientAllergiesEntity> response = patientAllergiesService.updatePatientAllergy(id, request);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+        BaseResponse<PatientAllergiesEntity> response = patientAllergiesService.updatePatientAllergy(id, request);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<BaseResponse<PatientAllergiesEntity>> deletePatientAllergy(@PathVariable Long id) {
-        try {
-            BaseResponse<PatientAllergiesEntity> response = patientAllergiesService.deletePatientAllergy(id);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+        BaseResponse<PatientAllergiesEntity> response = patientAllergiesService.deletePatientAllergy(id);
+        return ResponseEntity.ok(response);
     }
 }

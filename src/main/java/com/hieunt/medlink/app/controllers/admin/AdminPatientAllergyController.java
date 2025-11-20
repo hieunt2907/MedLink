@@ -20,21 +20,13 @@ public class AdminPatientAllergyController {
 
     @GetMapping("/{profileId}")
     public ResponseEntity<BaseResponse<Page<PatientAllergiesEntity>>> filterPatientAllergies(@PathVariable Long profileId, @PageableDefault(size = 20) Pageable pageable) {
-        try {
-            BaseResponse<Page<PatientAllergiesEntity>> response = patientAllergiesService.filterAllergies(profileId, pageable);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+        BaseResponse<Page<PatientAllergiesEntity>> response = patientAllergiesService.filterAllergies(profileId, pageable);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<BaseResponse<PatientAllergiesEntity>> deletePatientAllergy(@PathVariable Long id) {
-        try {
-            BaseResponse<PatientAllergiesEntity> response = patientAllergiesService.deletePatientAllergy(id);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+        BaseResponse<PatientAllergiesEntity> response = patientAllergiesService.deletePatientAllergy(id);
+        return ResponseEntity.ok(response);
     }
 }
