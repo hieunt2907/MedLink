@@ -21,15 +21,8 @@ public class DoctorPatientChronicDiseasesController {
     private final PatientChronicDiseasesService chronicDiseasesService;
 
     @GetMapping("/{profileId}")
-    public ResponseEntity<BaseResponse<Page<PatientChronicDiseasesEntity>>> filterPatientChronicDiseases(
-            @PathVariable Long profileId,
-            @PageableDefault(size = 20) Pageable pageable) {
-        try {
-            BaseResponse<Page<PatientChronicDiseasesEntity>> response =
-                    chronicDiseasesService.filterChronicDiseases(profileId, pageable);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+    public ResponseEntity<BaseResponse<Page<PatientChronicDiseasesEntity>>> filterPatientChronicDiseases(@PathVariable Long profileId, @PageableDefault(size = 20) Pageable pageable) {
+        BaseResponse<Page<PatientChronicDiseasesEntity>> response = chronicDiseasesService.filterChronicDiseases(profileId, pageable);
+        return ResponseEntity.ok(response);
     }
 }
