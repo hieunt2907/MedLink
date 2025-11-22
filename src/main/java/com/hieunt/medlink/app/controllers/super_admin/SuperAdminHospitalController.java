@@ -17,42 +17,26 @@ public class SuperAdminHospitalController {
     private final HospitalService hospitalService;
 
     @PostMapping("/")
-    public ResponseEntity<BaseResponse<HospitalEntity>> createHospital(HospitalRequest request ) {
-        try {
-            BaseResponse<HospitalEntity> response = hospitalService.createHospital(request);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+    public ResponseEntity<BaseResponse<HospitalEntity>> createHospital(HospitalRequest request) {
+        BaseResponse<HospitalEntity> response = hospitalService.createHospital(request);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BaseResponse<HospitalEntity>> updateHospital(@PathVariable Long id, HospitalRequest request ) {
-        try {
-            BaseResponse<HospitalEntity> response = hospitalService.updateHospital(id, request);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+    public ResponseEntity<BaseResponse<HospitalEntity>> updateHospital(@PathVariable Long id, HospitalRequest request) {
+        BaseResponse<HospitalEntity> response = hospitalService.updateHospital(id, request);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<BaseResponse<HospitalEntity>> deleteHospital(@PathVariable Long id) {
-        try {
-            BaseResponse<HospitalEntity> response = hospitalService.deleteHospital(id);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+        BaseResponse<HospitalEntity> response = hospitalService.deleteHospital(id);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/")
     public ResponseEntity<BaseResponse<Page<HospitalEntity>>> filterHospitals(@RequestParam(required = false) String keyword, Pageable pageable) {
-        try {
-            BaseResponse<Page<HospitalEntity>> response = hospitalService.filterHospitals(keyword, pageable);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new BaseResponse<>(e.getMessage(), null));
-        }
+        BaseResponse<Page<HospitalEntity>> response = hospitalService.filterHospitals(keyword, pageable);
+        return ResponseEntity.ok(response);
     }
 }
