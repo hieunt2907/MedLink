@@ -17,6 +17,9 @@ public class SpecialtiesEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "hospital_id")
+    private Long hospitalId;
+
     @Column(name = "name", nullable = false)
     private String name;
 
