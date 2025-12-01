@@ -1,7 +1,12 @@
 package com.hieunt.medlink.app.entities;
 
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,6 +32,8 @@ public class RoomEntity {
     private String roomNumber;
 
     @Column(name = "room_type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     private RoomType roomType;
 
     @Column(name = "specialty_id")
@@ -36,6 +43,8 @@ public class RoomEntity {
     private Integer capacity;
 
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     private RoomStatus status;
 
     public enum RoomType {
