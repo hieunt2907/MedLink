@@ -35,7 +35,7 @@ public class RoomServiceImpl implements RoomService {
             roomRepository.delete(roomEntity);
             return new BaseResponse<>("deleting room successfully", roomEntity);
         }
-        throw new ResourceNotFoundException("Room", "id", id);
+        throw new ResourceNotFoundException("Room not found");
     }
 
     @Override
@@ -47,7 +47,7 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public BaseResponse<RoomEntity> getRoom(Long id) {
         RoomEntity roomEntity = roomRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Room", "id", id));
+                .orElseThrow(() -> new ResourceNotFoundException("Room not found"));
         return new BaseResponse<>("getting room successfully", roomEntity);
     }
 
@@ -59,7 +59,7 @@ public class RoomServiceImpl implements RoomService {
             roomRepository.save(roomEntity);
             return new BaseResponse<>("updating room successfully", roomEntity);
         }
-        throw new ResourceNotFoundException("Room", "id", id);
+        throw new ResourceNotFoundException("Room not found");
     }
 
 }
