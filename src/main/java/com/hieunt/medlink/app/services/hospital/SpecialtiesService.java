@@ -8,8 +8,12 @@ import org.springframework.data.domain.Pageable;
 
 public interface SpecialtiesService {
     BaseResponse<SpecialtiesEntity> createSpecialty(SpecialtyRequest specialty);
+
     BaseResponse<SpecialtiesEntity> updateSpecialty(Long id, SpecialtyRequest specialty);
+
     BaseResponse<SpecialtiesEntity> getSpecialtyById(Long id);
+
     BaseResponse<SpecialtiesEntity> deleteSpecialty(Long id);
+
     BaseResponse<Page<SpecialtiesEntity>> filterSpecialties(Long hospitalId, Pageable pageable);
 }
