@@ -29,6 +29,6 @@ public class DoctorProfileEntity {
     @Column(name = "qualifications", columnDefinition = "TEXT")
     private String qualifications;
 
-    @Column(name = "experience_year")
-    private Integer experienceYear;
+    @Column(name = "experience_years")
+    private Integer experienceYears;
 }
