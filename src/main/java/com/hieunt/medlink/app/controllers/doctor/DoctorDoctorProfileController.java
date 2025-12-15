@@ -29,11 +29,11 @@ public class DoctorDoctorProfileController {
 
     @GetMapping("/filter")
     public ResponseEntity<BaseResponse<Page<DoctorProfileEntity>>> filterDoctorProfiles(
-            @RequestParam(required = false) Long specialtyId,
+            @RequestParam(required = true) Long hospitalId,
+            @RequestParam(required = true) Long specialtyId,
             @RequestParam(required = false, defaultValue = "") String keyword,
             @PageableDefault(size = 20) Pageable pageable) {
-        BaseResponse<Page<DoctorProfileEntity>> doctorProfiles = doctorProfileService.filterDoctorProfiles(specialtyId,
-                keyword, pageable);
+        BaseResponse<Page<DoctorProfileEntity>> doctorProfiles = doctorProfileService.filterDoctorProfiles(hospitalId, specialtyId, keyword, pageable);
         return ResponseEntity.ok(doctorProfiles);
     }
 
