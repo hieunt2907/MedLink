@@ -3,6 +3,8 @@ package com.hieunt.medlink.app.services.doctor;
 import com.hieunt.medlink.app.entities.DoctorProfileEntity;
 import com.hieunt.medlink.app.requests.doctor.DoctorProfileRequest;
 import com.hieunt.medlink.app.responses.BaseResponse;
+import com.hieunt.medlink.app.responses.doctor.DoctorProfileResponse;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -19,5 +21,5 @@ public interface DoctorProfileService {
 
     BaseResponse<DoctorProfileEntity> deleteDoctorProfile(Long id);
 
-    BaseResponse<Page<DoctorProfileEntity>> filterDoctorProfiles(Long specialtyId, String keyword, Pageable pageable);
+    BaseResponse<Page<DoctorProfileResponse>> filterDoctorProfiles(String keyword, Pageable pageable);
 }

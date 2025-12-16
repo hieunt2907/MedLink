@@ -6,6 +6,7 @@ import com.hieunt.medlink.app.mappers.DoctorProfileMapper;
 import com.hieunt.medlink.app.repositories.DoctorProfileRepository;
 import com.hieunt.medlink.app.requests.doctor.DoctorProfileRequest;
 import com.hieunt.medlink.app.responses.BaseResponse;
+import com.hieunt.medlink.app.responses.doctor.DoctorProfileResponse;
 import com.hieunt.medlink.pkg.error.ResourceNotFoundException;
 import com.hieunt.medlink.pkg.utils.GetCurrentUser;
 
@@ -87,9 +88,9 @@ public class DoctorProfileServiceImpl implements DoctorProfileService {
     }
 
     @Override
-    public BaseResponse<Page<DoctorProfileEntity>> filterDoctorProfiles(Long specialtyId, String keyword,
+    public BaseResponse<Page<DoctorProfileResponse>> filterDoctorProfiles(String keyword,
             Pageable pageable) {
-        Page<DoctorProfileEntity> doctorProfiles = doctorProfileRepository.filterDoctorProfiles(specialtyId, keyword,
+        Page<DoctorProfileResponse> doctorProfiles = doctorProfileRepository.filterDoctorProfiles(keyword,
                 pageable);
         return new BaseResponse<>("filtering doctor profiles successfully", doctorProfiles);
     }
