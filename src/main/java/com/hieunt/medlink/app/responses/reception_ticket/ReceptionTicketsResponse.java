@@ -17,7 +17,7 @@ public interface ReceptionTicketsResponse {
     Instant getEstimatedTime();
     Instant getActualStartTime();
     Instant getActualEndTime();
-    VisitPayerType getVisitPayerType();
+    VisitPayerType getPayerType();
     QueueStatus getStatus();
     String getReason();
     AppointmentPriority getPriority();
