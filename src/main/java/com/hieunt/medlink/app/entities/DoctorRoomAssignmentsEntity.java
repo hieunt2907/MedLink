@@ -41,10 +41,6 @@ public class DoctorRoomAssignmentsEntity {
     @Column(name = "is_primary")
     private Boolean isPrimary;
 
-    @Column(name = "days_of_week", columnDefinition = "smallint[]")
-    @JdbcTypeCode(SqlTypes.SMALLINT)
-    private Short[] daysOfWeek;
-
     @Column(name = "shift_start")
     private LocalTime shiftStart;
 
@@ -57,8 +53,8 @@ public class DoctorRoomAssignmentsEntity {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @Column(name = "note", columnDefinition = "TEXT")
-    private String note;
+    @Column(name = "notes", columnDefinition = "TEXT")
+    private String notes;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMPTZ")
     private OffsetDateTime createdAt;
