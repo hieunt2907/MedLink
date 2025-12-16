@@ -16,5 +16,5 @@ public interface RoomService {
 
     BaseResponse<RoomEntity> getRoom(Long id);
 
-    BaseResponse<Page<RoomEntity>> filterRooms(Long hospitalId, Pageable pageable);
+    BaseResponse<Page<RoomEntity>> filterRooms(Long specialtyId, Pageable pageable);
 }

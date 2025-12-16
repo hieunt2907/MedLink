@@ -39,8 +39,8 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public BaseResponse<Page<RoomEntity>> filterRooms(Long hospitalId, Pageable pageable) {
-        Page<RoomEntity> rooms = roomRepository.filterRooms(hospitalId, pageable);
+    public BaseResponse<Page<RoomEntity>> filterRooms(Long specialtyId, Pageable pageable) {
+        Page<RoomEntity> rooms = roomRepository.filterRooms(specialtyId, pageable);
         return new BaseResponse<>("filtering rooms successfully", rooms);
     }
 
