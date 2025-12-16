@@ -17,12 +17,11 @@ public class DoctorRoomAssignmentsMapper {
         entity.setRoomId(request.getRoomId());
         entity.setSpecialtyId(request.getSpecialtyId());
         entity.setIsPrimary(request.getIsPrimary());
-        entity.setDaysOfWeek(request.getDaysOfWeek());
         entity.setShiftStart(request.getShiftStart());
         entity.setShiftEnd(request.getShiftEnd());
         entity.setStartDate(request.getStartDate());
         entity.setEndDate(request.getEndDate());
-        entity.setNote(request.getNote());
+        entity.setNotes(request.getNotes());
         return entity;
     }
 
@@ -46,9 +45,6 @@ public class DoctorRoomAssignmentsMapper {
         if (request.getIsPrimary() != null) {
             entity.setIsPrimary(request.getIsPrimary());
         }
-        if (request.getDaysOfWeek() != null) {
-            entity.setDaysOfWeek(request.getDaysOfWeek());
-        }
         if (request.getShiftStart() != null) {
             entity.setShiftStart(request.getShiftStart());
         }
@@ -61,8 +57,8 @@ public class DoctorRoomAssignmentsMapper {
         if (request.getEndDate() != null) {
             entity.setEndDate(request.getEndDate());
         }
-        if (request.getNote() != null) {
-            entity.setNote(request.getNote());
+        if (request.getNotes() != null) {
+            entity.setNotes(request.getNotes());
         }
         return entity;
     }
