@@ -16,10 +16,9 @@ public class DoctorRoomAssignmentsRequest {
     private Long roomId;
     private Long specialtyId;
     private Boolean isPrimary;
-    private Short[] daysOfWeek;
     private LocalTime shiftStart;
     private LocalTime shiftEnd;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String note;
+    private String notes;
 }
