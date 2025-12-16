@@ -6,6 +6,8 @@ import com.hieunt.medlink.app.responses.BaseResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import com.hieunt.medlink.app.responses.doctor.DoctorRoomAssignmentResponse;
+
 public interface DoctorRoomAssignmentsService {
     BaseResponse<DoctorRoomAssignmentsEntity> createDoctorRoomAssignment(DoctorRoomAssignmentsRequest request);
 
@@ -15,6 +17,6 @@ public interface DoctorRoomAssignmentsService {
 
     BaseResponse<DoctorRoomAssignmentsEntity> deleteDoctorRoomAssignment(Long id);
 
-    BaseResponse<Page<DoctorRoomAssignmentsEntity>> filterDoctorRoomAssignments(Long doctorProfileId, String keyword,
+    BaseResponse<Page<DoctorRoomAssignmentResponse>> filterDoctorRoomAssignments(Long doctorProfileId, String keyword,
             Pageable pageable);
 }
