@@ -38,10 +38,10 @@ public class AdminRoomController {
         return ResponseEntity.ok(roomService.getRoom(id));
     }
 
-    @GetMapping("/{hospitalId}")
-    public ResponseEntity<BaseResponse<Page<RoomEntity>>> filterRooms(@PathVariable Long hospitalId,
+    @GetMapping("/{specialtyId}")
+    public ResponseEntity<BaseResponse<Page<RoomEntity>>> filterRooms(@PathVariable Long specialtyId,
             @PageableDefault(size = 20) Pageable pageable) {
-        BaseResponse<Page<RoomEntity>> rooms = roomService.filterRooms(hospitalId, pageable);
+        BaseResponse<Page<RoomEntity>> rooms = roomService.filterRooms(specialtyId, pageable);
         return ResponseEntity.ok(rooms);
     }
 }
