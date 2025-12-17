@@ -3,6 +3,7 @@ package com.hieunt.medlink.app.controllers.doctor;
 import com.hieunt.medlink.app.entities.DoctorProfileEntity;
 import com.hieunt.medlink.app.requests.doctor.DoctorProfileRequest;
 import com.hieunt.medlink.app.responses.BaseResponse;
+import com.hieunt.medlink.app.responses.doctor.DoctorProfileResponse;
 import com.hieunt.medlink.app.services.doctor.DoctorProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,12 +29,10 @@ public class DoctorDoctorProfileController {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<BaseResponse<Page<DoctorProfileEntity>>> filterDoctorProfiles(
-            @RequestParam(required = true) Long hospitalId,
-            @RequestParam(required = true) Long specialtyId,
+    public ResponseEntity<BaseResponse<Page<DoctorProfileResponse>>> filterDoctorProfiles(
             @RequestParam(required = false, defaultValue = "") String keyword,
             @PageableDefault(size = 20) Pageable pageable) {
-        BaseResponse<Page<DoctorProfileEntity>> doctorProfiles = doctorProfileService.filterDoctorProfiles(hospitalId, specialtyId, keyword, pageable);
+        BaseResponse<Page<DoctorProfileResponse>> doctorProfiles = doctorProfileService.filterDoctorProfiles(keyword, pageable);
         return ResponseEntity.ok(doctorProfiles);
     }
 
