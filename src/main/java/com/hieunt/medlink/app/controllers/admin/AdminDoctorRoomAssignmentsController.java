@@ -1,8 +1,10 @@
 package com.hieunt.medlink.app.controllers.admin;
 
 import com.hieunt.medlink.app.entities.DoctorRoomAssignmentsEntity;
+
 import com.hieunt.medlink.app.requests.doctor.DoctorRoomAssignmentsRequest;
 import com.hieunt.medlink.app.responses.BaseResponse;
+import com.hieunt.medlink.app.responses.doctor.DoctorRoomAssignmentResponse;
 import com.hieunt.medlink.app.services.doctor.DoctorRoomAssignmentsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -43,11 +45,11 @@ public class AdminDoctorRoomAssignmentsController {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<BaseResponse<Page<DoctorRoomAssignmentsEntity>>> filterDoctorRoomAssignments(
+    public ResponseEntity<BaseResponse<Page<DoctorRoomAssignmentResponse>>> filterDoctorRoomAssignments(
             @RequestParam(required = false) Long doctorProfileId,
             @RequestParam(required = false, defaultValue = "") String keyword,
             @PageableDefault(size = 20) Pageable pageable) {
-        BaseResponse<Page<DoctorRoomAssignmentsEntity>> assignments = doctorRoomAssignmentsService
+        BaseResponse<Page<DoctorRoomAssignmentResponse>> assignments = doctorRoomAssignmentsService
                 .filterDoctorRoomAssignments(doctorProfileId, keyword, pageable);
         return ResponseEntity.ok(assignments);
     }
