@@ -4,6 +4,7 @@ package com.hieunt.medlink.app.controllers.admin;
 import com.hieunt.medlink.app.entities.PatientAllergiesEntity;
 import com.hieunt.medlink.app.entities.PatientProfilesEntity;
 import com.hieunt.medlink.app.responses.BaseResponse;
+import com.hieunt.medlink.app.responses.patient.PatientProfileResponse;
 import com.hieunt.medlink.app.services.patient.PatientAllergiesService;
 import com.hieunt.medlink.app.services.patient.PatientProfileService;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +27,8 @@ public class AdminPatientProfileController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<BaseResponse<Page<PatientProfilesEntity>>> filterPatientProfiles(@RequestParam(required = false) String keyword, Pageable pageable) {
-        BaseResponse<Page<PatientProfilesEntity>> response = patientProfileService.filterPatientProfiles(keyword, pageable);
+    public ResponseEntity<BaseResponse<Page<PatientProfileResponse>>> filterPatientProfiles(@RequestParam(required = false) String keyword, Pageable pageable) {
+        BaseResponse<Page<PatientProfileResponse>> response = patientProfileService.filterPatientProfiles(keyword, pageable);
         return ResponseEntity.ok(response);
     }
 
