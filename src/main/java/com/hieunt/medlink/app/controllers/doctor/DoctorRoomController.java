@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class DoctorRoomController {
     private final RoomService roomService;
 
-    @GetMapping("/{hospitalId}")
-    public ResponseEntity<BaseResponse<Page<RoomEntity>>> filterRooms(@PathVariable Long hospitalId,
+    @GetMapping("/{specialtyId}")
+    public ResponseEntity<BaseResponse<Page<RoomEntity>>> filterRooms(@PathVariable Long specialtyId,
             @PageableDefault(size = 20) Pageable pageable) {
-        BaseResponse<Page<RoomEntity>> rooms = roomService.filterRooms(hospitalId, pageable);
+        BaseResponse<Page<RoomEntity>> rooms = roomService.filterRooms(specialtyId, pageable);
         return ResponseEntity.ok(rooms);
     }
 }
