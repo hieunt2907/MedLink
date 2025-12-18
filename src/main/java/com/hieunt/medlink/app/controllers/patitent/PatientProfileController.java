@@ -3,6 +3,7 @@ package com.hieunt.medlink.app.controllers.patitent;
 import com.hieunt.medlink.app.entities.PatientProfilesEntity;
 import com.hieunt.medlink.app.requests.patient.PatientProfileRequest;
 import com.hieunt.medlink.app.responses.BaseResponse;
+import com.hieunt.medlink.app.responses.patient.PatientProfileResponse;
 import com.hieunt.medlink.app.services.patient.PatientProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +16,15 @@ public class PatientProfileController {
     private final PatientProfileService patientProfileService;
 
     @PostMapping("/")
-    public ResponseEntity<BaseResponse<PatientProfilesEntity>> createPatientProfile(PatientProfileRequest request) {
+    public ResponseEntity<BaseResponse<PatientProfilesEntity>> createPatientProfile(
+            @RequestBody PatientProfileRequest request) {
         BaseResponse<PatientProfilesEntity> response = patientProfileService.createPatientProfile(request);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/")
-    public ResponseEntity<BaseResponse<PatientProfilesEntity>> getMe() {
-        BaseResponse<PatientProfilesEntity> response = patientProfileService.getMe();
+    public ResponseEntity<BaseResponse<PatientProfileResponse>> getMe() {
+        BaseResponse<PatientProfileResponse> response = patientProfileService.getMe();
         return ResponseEntity.ok(response);
     }
 
