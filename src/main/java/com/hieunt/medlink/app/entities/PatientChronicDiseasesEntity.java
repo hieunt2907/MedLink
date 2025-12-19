@@ -24,7 +24,7 @@ public class PatientChronicDiseasesEntity {
     private String diseaseName;
 
     @Column(name = "diagnosed_date", columnDefinition = "DATE")
-    private LocalDate diagnosisDate;
+    private LocalDate diagnosedDate;
 
     @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;
