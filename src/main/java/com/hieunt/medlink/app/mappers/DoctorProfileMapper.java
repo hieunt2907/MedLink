@@ -15,7 +15,7 @@ public class DoctorProfileMapper {
         entity.setUserId(request.getUserId());
         entity.setSpecialtyId(request.getSpecialtyId());
         entity.setQualifications(request.getQualifications());
-        entity.setExperienceYear(request.getExperienceYear());
+        entity.setExperienceYears(request.getExperienceYears());
         return entity;
     }
 
@@ -32,8 +32,8 @@ public class DoctorProfileMapper {
         if (request.getQualifications() != null) {
             entity.setQualifications(request.getQualifications());
         }
-        if (request.getExperienceYear() != null) {
-            entity.setExperienceYear(request.getExperienceYear());
+        if (request.getExperienceYears() != null) {
+            entity.setExperienceYears(request.getExperienceYears());
         }
         return entity;
     }
