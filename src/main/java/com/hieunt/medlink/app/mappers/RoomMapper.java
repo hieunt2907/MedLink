@@ -13,6 +13,7 @@ public class RoomMapper {
 
         RoomEntity entity = new RoomEntity();
         entity.setRoomNumber(request.getRoomNumber());
+        entity.setHospitalId(request.getHospitalId());
         entity.setRoomType(request.getRoomType());
         entity.setSpecialtyId(request.getSpecialtyId());
         entity.setCapacity(request.getCapacity());
@@ -28,6 +29,9 @@ public class RoomMapper {
 
         if (request.getRoomNumber() != null) {
             entity.setRoomNumber(request.getRoomNumber());
+        }
+        if (request.getHospitalId() != null) {
+            entity.setHospitalId(request.getHospitalId());
         }
         if (request.getRoomType() != null) {
             entity.setRoomType(request.getRoomType());
