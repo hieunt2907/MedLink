@@ -12,7 +12,7 @@ public class PatientChronicDiseasesMapper {
 
         PatientChronicDiseasesEntity entity = new PatientChronicDiseasesEntity();
         entity.setDiseaseName(request.getDiseaseName());
-        entity.setDiagnosisDate(request.getDiagnosisDate());
+        entity.setDiagnosedDate(request.getDiagnosedDate());
         entity.setNotes(request.getNotes());
         return entity;
     }
@@ -23,8 +23,8 @@ public class PatientChronicDiseasesMapper {
         if (request.getDiseaseName() != null) {
             entity.setDiseaseName(request.getDiseaseName());
         }
-        if (request.getDiagnosisDate() != null) {
-            entity.setDiagnosisDate(request.getDiagnosisDate());
+        if (request.getDiagnosedDate() != null) {
+            entity.setDiagnosedDate(request.getDiagnosedDate());
         }
         if (request.getNotes() != null) {
             entity.setNotes(request.getNotes());
