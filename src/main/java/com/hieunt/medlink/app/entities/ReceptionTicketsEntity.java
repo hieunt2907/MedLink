@@ -2,8 +2,14 @@ package com.hieunt.medlink.app.entities;
 
 import java.time.OffsetDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -49,15 +55,21 @@ public class ReceptionTicketsEntity {
     @Column(name = "actual_end_time", columnDefinition = "TIMESTAMPTZ")
     private OffsetDateTime actualEndTime;
 
-    @Column(name = "visit_payer_type")
-    private VisitPayerType visitPayerType;
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(name = "payer_type")
+    private VisitPayerType payerType;
 
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(name = "status")
     private QueueStatus Status;
 
     @Column(name = "reason", columnDefinition = "TEXT")
     private String reason;
 
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(name = "priority")
     private AppointmentPriority priority;
 
