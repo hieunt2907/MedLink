@@ -11,12 +11,13 @@ public interface RoomRepository extends BaseRepository<RoomEntity, Long> {
 
     @Query(value = """
             select
-                r.id          as id,
-                r.room_number as roomNumber,
-                r.room_type   as roomType,
-                r.specialty_id as specialtyId,
-                r.capacity    as capacity,
-                r.status      as status
+                r.id,
+                r.room_number,
+                r.hospital_id,
+                r.room_type,
+                r.specialty_id,
+                r.capacity,
+                r.status
             from rooms r
             where r.specialty_id = :specialtyId
             """, nativeQuery = true)
