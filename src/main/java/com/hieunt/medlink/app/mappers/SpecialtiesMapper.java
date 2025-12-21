@@ -14,6 +14,7 @@ public class SpecialtiesMapper {
         SpecialtiesEntity entity = new SpecialtiesEntity();
         entity.setName(request.getName());
         entity.setDescription(request.getDescription());
+        entity.setHospitalId(request.getHospitalId());
 
         if (request.getStatus() != null) {
             entity.setStatus(request.getStatus());
@@ -29,6 +30,9 @@ public class SpecialtiesMapper {
 
         if (request.getName() != null) {
             entity.setName(request.getName());
+        }
+        if (request.getHospitalId() != null) {
+            entity.setHospitalId(request.getHospitalId());
         }
         if (request.getDescription() != null) {
             entity.setDescription(request.getDescription());
