@@ -9,12 +9,7 @@ import org.springframework.data.repository.query.Param;
 public interface PatientChronicDiseasesRepository extends BaseRepository<PatientChronicDiseasesEntity, Long> {
 
     @Query(value = """
-                select
-                    pcd.id               as id,
-                    pcd.patient_profile_id as patientProfileId,
-                    pcd.disease_name     as diseaseName,
-                    pcd.diagnosed_date   as diagnosisDate,
-                    pcd.notes            as notes
+                select pcd.*
                 from patient_chronic_diseases pcd
                 where pcd.patient_profile_id = :id
             """, nativeQuery = true)
