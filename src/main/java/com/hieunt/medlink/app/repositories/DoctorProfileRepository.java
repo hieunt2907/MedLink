@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.hieunt.medlink.app.entities.DoctorProfileEntity;
+import com.hieunt.medlink.app.responses.doctor.DoctorProfileResponse;
 
 public interface DoctorProfileRepository extends BaseRepository<DoctorProfileEntity, Long> {
     boolean existsByUserId(Long userId);
@@ -14,16 +15,21 @@ public interface DoctorProfileRepository extends BaseRepository<DoctorProfileEnt
 
     @Query(value = """
             select
-                dp.id          as id,
-                dp.user_id     as userId,
-                dp.specialty_id as specialtyId,
-                dp.qualifications as qualifications,
-                dp.experience_year as experienceYear
+                dp.id,
+                dp.user_id as userId,
+                u.full_name as fullName,
+                s.name as specialtyName,
+                h.name as hospitalName,
+                s.id as specialtyId,
+                h.id as hospitalId,
+                dp.experience_years,
+                dp.qualifications
             from doctor_profiles dp
             inner join users u on dp.user_id = u.id
-            where u.fullname ilike concat('%', :keyword, '%')
-            and dp.specialty_id = :specialtyId
+            inner join user_roles ur on u.id = ur.user_id
+            inner join specialties s on dp.specialty_id = s.id
+            inner join hospitals h on ur.hospital_id = h.id
+            where u.full_name ilike concat('%', :keyword, '%')
             """, nativeQuery = true)
-    Page<DoctorProfileEntity> filterDoctorProfiles(@Param("specialtyId") Long specialtyId,
-            @Param("keyword") String keyword, Pageable pageable);
+    Page<DoctorProfileResponse> filterDoctorProfiles(@Param("keyword") String keyword, Pageable pageable);
 }
