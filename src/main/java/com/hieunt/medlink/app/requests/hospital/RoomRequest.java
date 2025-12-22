@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class RoomRequest {
     private String roomNumber;
     private RoomType roomType;
+    private Long hospitalId;
     private Long specialtyId;
     private Integer capacity;
     private RoomStatus status;
