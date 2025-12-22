@@ -21,7 +21,7 @@ public class ReceptionTicketsRequest {
     private Long roomId;
     private Integer queueNumber;
     private OffsetDateTime estimatedTime;
-    private VisitPayerType visitPayerType;
+    private VisitPayerType payerType;
     private QueueStatus Status;
     private String reason;
     private AppointmentPriority priority;
