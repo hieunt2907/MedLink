@@ -11,5 +11,5 @@ public class DoctorProfileRequest {
     private Long userId;
     private Long specialtyId;
     private String qualifications;
-    private Integer experienceYear;
+    private Integer experienceYears;
 }
