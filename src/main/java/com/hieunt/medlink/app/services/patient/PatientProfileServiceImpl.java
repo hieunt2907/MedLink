@@ -6,6 +6,7 @@ import com.hieunt.medlink.app.mappers.PatientProfileMapper;
 import com.hieunt.medlink.app.repositories.PatientProfileRepository;
 import com.hieunt.medlink.app.requests.patient.PatientProfileRequest;
 import com.hieunt.medlink.app.responses.BaseResponse;
+import com.hieunt.medlink.app.responses.patient.PatientProfileResponse;
 import com.hieunt.medlink.pkg.error.DuplicateResourceException;
 import com.hieunt.medlink.pkg.error.ResourceNotFoundException;
 import com.hieunt.medlink.pkg.utils.GetCurrentUser;
@@ -45,9 +46,9 @@ public class PatientProfileServiceImpl implements PatientProfileService {
     }
 
     @Override
-    public BaseResponse<PatientProfilesEntity> getMe() {
+    public BaseResponse<PatientProfileResponse> getMe() {
         UserEntity user = getCurrentUser.getCurrentUser();
-        PatientProfilesEntity patient = patientProfileRepository.findByUserId(user.getId());
+        PatientProfileResponse patient = patientProfileRepository.filterPatientProfileMe(user.getId());
 
         if (patient == null) {
             throw new ResourceNotFoundException("Patient profile not found for the current user");
@@ -104,8 +105,8 @@ public class PatientProfileServiceImpl implements PatientProfileService {
     }
 
     @Override
-    public BaseResponse<Page<PatientProfilesEntity>> filterPatientProfiles(String keyword, Pageable pageable) {
-        Page<PatientProfilesEntity> patients = patientProfileRepository.filterPatientProfiles(keyword, pageable);
+    public BaseResponse<Page<PatientProfileResponse>> filterPatientProfiles(String keyword, Pageable pageable) {
+        Page<PatientProfileResponse> patients = patientProfileRepository.filterPatientProfiles(keyword, pageable);
         return new BaseResponse<>("filtering patient profiles successfully", patients);
     }
 
