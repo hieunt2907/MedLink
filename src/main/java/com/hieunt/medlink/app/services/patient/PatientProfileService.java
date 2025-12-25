@@ -3,6 +3,8 @@ package com.hieunt.medlink.app.services.patient;
 import com.hieunt.medlink.app.entities.PatientProfilesEntity;
 import com.hieunt.medlink.app.requests.patient.PatientProfileRequest;
 import com.hieunt.medlink.app.responses.BaseResponse;
+import com.hieunt.medlink.app.responses.patient.PatientProfileResponse;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,10 +17,10 @@ public interface PatientProfileService {
 
     BaseResponse<PatientProfilesEntity> getPatientProfile(Long id);
 
-    BaseResponse<PatientProfilesEntity> getMe();
+    BaseResponse<PatientProfileResponse> getMe();
 
     BaseResponse<PatientProfilesEntity> updateMe(PatientProfileRequest request);
 
-    BaseResponse<Page<PatientProfilesEntity>> filterPatientProfiles(String keyword, Pageable pageable);
+    BaseResponse<Page<PatientProfileResponse>> filterPatientProfiles(String keyword, Pageable pageable);
 
 }
