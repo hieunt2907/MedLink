@@ -1,39 +1,39 @@
 <div class="patient-layout">
     <!-- Sidebar / Navigation -->
-    <!-- Sidebar / Navigation -->
-    <nav class="sidebar">
+    <nav class="sidebar" [class.collapsed]="isSidebarCollapsed">
         <div class="sidebar-header"
             style="display: flex; align-items: center; justify-content: center; padding: 0 1rem; margin-bottom: 1rem; min-height: 50px;">
-            <div class="brand" style="margin: 0; border: none; padding: 0;">MedLink</div>
+            <div *ngIf="!isSidebarCollapsed" class="brand" style="margin: 0; border: none; padding: 0;">MedLink</div>
+            <div *ngIf="isSidebarCollapsed" class="brand" style="margin: 0; border: none; padding: 0;">M</div>
         </div>
 
         <div class="user-info" *ngIf="user">
-            <div class="avatar-placeholder">
+            <div class="avatar-placeholder" [title]="user.fullName">
                 {{ user.fullName.charAt(0) }}
             </div>
-            <div class="details">
+            <div class="details" *ngIf="!isSidebarCollapsed">
                 <h3>{{ user.fullName }}</h3>
                 <p>Bệnh nhân</p>
             </div>
         </div>
 
         <ul class="nav-links">
-            <li [class.active]="activeTab === 'overview'" title="Phiếu tiếp đón">
-                <a href="#overview" (click)="setTab('overview'); $event.preventDefault()">
+            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" title="Phiếu tiếp đón">
+                <a routerLink="/patient">
                     <i class="material-icons">description</i>
-                    <span>Phiếu tiếp đón</span>
+                    <span *ngIf="!isSidebarCollapsed">Phiếu tiếp đón</span>
                 </a>
             </li>
-            <li [class.active]="activeTab === 'medical-records'" title="Hồ sơ y tế">
-                <a href="#medical-records" (click)="setTab('medical-records'); $event.preventDefault()">
+            <li routerLinkActive="active" title="Hồ sơ y tế">
+                <a routerLink="records">
                     <i class="material-icons">folder_shared</i>
-                    <span>Hồ sơ y tế</span>
+                    <span *ngIf="!isSidebarCollapsed">Hồ sơ y tế</span>
                 </a>
             </li>
             <li title="Đăng xuất">
-                <a href="#logout" (click)="logout(); $event.preventDefault()">
+                <a href="javascript:void(0)" (click)="logout()">
                     <i class="material-icons">logout</i>
-                    <span>Đăng xuất</span>
+                    <span *ngIf="!isSidebarCollapsed">Đăng xuất</span>
                 </a>
             </li>
         </ul>
@@ -48,407 +48,8 @@
             </div>
         </header>
 
-        <div class="dashboard-content" *ngIf="!isLoading; else loadingTpl">
-
-            <!-- Medical Records Tab -->
-            <section class="card profile-card" *ngIf="activeTab === 'medical-records'">
-                <div *ngIf="!patientProfile && !isCreatingProfile" class="empty-state-center"
-                    style="display: flex; justify-content: center; align-items: center; min-height: 200px;">
-                    <button class="btn btn-primary" (click)="createProfile()"
-                        style="display: flex; align-items: center; gap: 8px;">
-                        <i class="material-icons">add</i> Tạo hồ sơ y tế
-                    </button>
-                </div>
-
-                <div *ngIf="patientProfile && !isEditingProfile">
-                    <div class="section-header"
-                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                        <h2 style="margin: 0;">Hồ sơ y tế</h2>
-                        <div class="header-actions">
-                            <button class="btn-icon" (click)="editProfile()"
-                                style="background: none; border: none; cursor: pointer; margin-right: 8px;" title="Sửa">
-                                <i class="material-icons">edit</i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <label>Mã bệnh nhân</label>
-                            <p>{{ patientProfile.patientCode }}</p>
-                        </div>
-                        <div class="info-item">
-                            <label>Họ và tên</label>
-                            <p>{{ patientProfile.fullName }}</p>
-                        </div>
-                        <div class="info-item">
-                            <label>Ngày sinh</label>
-                            <p>{{ patientProfile.dateOfBirth | date:'dd/MM/yyyy' }}</p>
-                        </div>
-                        <div class="info-item">
-                            <label>Giới tính</label>
-                            <p>{{ getGenderDisplay(patientProfile.gender) }}</p>
-                        </div>
-                        <div class="info-item">
-                            <label>Số điện thoại</label>
-                            <p>{{ patientProfile.phone }}</p>
-                        </div>
-                        <div class="info-item">
-                            <label>Email</label>
-                            <p>{{ patientProfile.email }}</p>
-                        </div>
-                        <div class="info-item">
-                            <label>Địa chỉ</label>
-                            <p>{{ patientProfile.address }}</p>
-                        </div>
-                        <div class="info-item">
-                            <label>Nhóm máu</label>
-                            <p>{{ getBloodTypeDisplay(patientProfile.bloodType) }}</p>
-                        </div>
-                        <div class="info-item">
-                            <label>Liên hệ khẩn cấp</label>
-                            <p>{{ patientProfile.emergencyContactName }}</p>
-                        </div>
-                        <div class="info-item">
-                            <label>Số điện thoại khẩn cấp</label>
-                            <p>{{ patientProfile.emergencyContactPhone }}</p>
-                        </div>
-                    </div>
-                    <div class="divider"></div>
-                </div>
-
-                <!-- Create/Edit Profile Form -->
-                <div *ngIf="isCreatingProfile || isEditingProfile" class="edit-form-container"
-                    style="margin-bottom: 2rem;">
-                    <h2 style="margin-top: 0;">{{ isCreatingProfile ? 'Tạo hồ sơ y tế' : 'Cập nhật hồ sơ y tế' }}</h2>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label>Mã bệnh nhân</label>
-                            <input type="text" [(ngModel)]="profileForm.patientCode" class="form-control"
-                                placeholder="Nhập mã">
-                        </div>
-                        <div class="form-group">
-                            <label>Nhóm máu</label>
-                            <select [(ngModel)]="profileForm.bloodType" class="form-control">
-                                <option value="A_POSITIVE">A+</option>
-                                <option value="A_NEGATIVE">A-</option>
-                                <option value="B_POSITIVE">B+</option>
-                                <option value="B_NEGATIVE">B-</option>
-                                <option value="AB_POSITIVE">AB+</option>
-                                <option value="AB_NEGATIVE">AB-</option>
-                                <option value="O_POSITIVE">O+</option>
-                                <option value="O_NEGATIVE">O-</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Tên liên hệ khẩn cấp</label>
-                            <input type="text" [(ngModel)]="profileForm.emergencyContactName" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>SĐT liên hệ khẩn cấp</label>
-                            <input type="text" [(ngModel)]="profileForm.emergencyContactPhone" class="form-control">
-                        </div>
-                    </div>
-                    <div class="form-actions" style="margin-top: 1rem; display: flex; gap: 10px;">
-                        <button class="btn btn-primary" (click)="saveProfile()">Lưu</button>
-                        <button class="btn btn-secondary" (click)="cancelEditProfile()">Hủy</button>
-                    </div>
-                    <div class="divider" *ngIf="!isCreatingProfile"></div>
-                </div>
-
-
-                <div class="medical-details-grid" *ngIf="patientProfile || isCreatingProfile">
-                    <div class="medical-section">
-                        <div class="subsection-header"
-                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                            <h3 style="margin: 0;"><i class="material-icons">warning</i> Dị ứng thuốc</h3>
-                            <button class="btn-icon add" (click)="addAllergy()" *ngIf="!isAddingAllergy"
-                                style="background: none; border: none; cursor: pointer; color: #007bff;"
-                                title="Thêm dị ứng">
-                                <i class="material-icons">add_circle</i>
-                            </button>
-                        </div>
-
-                        <!-- Add Allergy Form -->
-                        <div *ngIf="isAddingAllergy" class="horizontal-form-row card-like">
-                            <div class="form-inputs">
-                                <input type="text" [(ngModel)]="allergyForm.allergyName" placeholder="Tên dị ứng"
-                                    class="form-control small">
-                                <select [(ngModel)]="allergyForm.severity" class="form-control small">
-                                    <option value="mild">Nhẹ</option>
-                                    <option value="moderate">Trung bình</option>
-                                    <option value="severe">Nặng</option>
-                                </select>
-                                <input type="text" [(ngModel)]="allergyForm.notes" placeholder="Ghi chú"
-                                    class="form-control small input-notes">
-                            </div>
-                            <div class="form-row-actions">
-                                <button class="btn-icon save-btn" (click)="saveNewAllergy()"><i
-                                        class="material-icons">check</i></button>
-                                <button class="btn-icon cancel-btn" (click)="cancelAddAllergy()"><i
-                                        class="material-icons">close</i></button>
-                            </div>
-                        </div>
-
-                        <div *ngIf="allergies.length > 0; else noAllergies" class="list-cards">
-                            <div class="mini-card allergy-card" *ngFor="let a of allergies">
-                                <!-- View Mode -->
-                                <ng-container *ngIf="editingAllergyId !== a.id">
-                                    <div class="card-content-view">
-                                        <div
-                                            style="display: flex; justify-content: space-between; align-items: flex-start;">
-                                            <div class="info-rows">
-                                                <div class="info-row">
-                                                    <span class="label">Tên dị ứng:</span>
-                                                    <span class="value name">{{ a.allergyName }}</span>
-                                                </div>
-                                                <div class="info-row">
-                                                    <span class="label">Mức độ:</span>
-                                                    <span class="value">
-                                                        {{ getSeverityDisplay(a.severity) }}
-                                                    </span>
-                                                </div>
-                                                <div class="info-row" *ngIf="a.notes">
-                                                    <span class="label">Ghi chú:</span>
-                                                    <span class="value">{{ a.notes }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="item-actions">
-                                                <button class="btn-icon small" (click)="editAllergy(a)"
-                                                    style="background: none; border: none; cursor: pointer; padding: 0 4px;"
-                                                    title="Sửa">
-                                                    <i class="material-icons" style="font-size: 18px;">edit</i>
-                                                </button>
-                                                <button class="btn-icon small delete" (click)="deleteAllergy(a)"
-                                                    style="background: none; border: none; cursor: pointer; color: #dc3545; padding: 0 4px;"
-                                                    title="Xóa">
-                                                    <i class="material-icons" style="font-size: 18px;">delete</i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ng-container>
-
-                                <!-- Edit Mode -->
-                                <div *ngIf="editingAllergyId === a.id" class="horizontal-form-row editing">
-                                    <div class="form-inputs">
-                                        <input type="text" [(ngModel)]="allergyForm.allergyName"
-                                            placeholder="Tên dị ứng" class="form-control small">
-                                        <select [(ngModel)]="allergyForm.severity" class="form-control small">
-                                            <option value="mild">Nhẹ</option>
-                                            <option value="moderate">Trung bình</option>
-                                            <option value="severe">Nặng</option>
-                                        </select>
-                                        <input type="text" [(ngModel)]="allergyForm.notes" placeholder="Ghi chú"
-                                            class="form-control small input-notes">
-                                    </div>
-                                    <div class="form-row-actions">
-                                        <button class="btn-icon save-btn" (click)="saveEditAllergy()"><i
-                                                class="material-icons">check</i></button>
-                                        <button class="btn-icon cancel-btn" (click)="cancelEditAllergy()"><i
-                                                class="material-icons">close</i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pagination small" *ngIf="allergiesTotalPages > 1">
-                                <button [disabled]="allergiesPage === 0"
-                                    (click)="onAllergyPageChange(allergiesPage - 1)">
-                                    <i class="material-icons">chevron_left</i>
-                                </button>
-                                <span>{{ allergiesPage + 1 }}/{{ allergiesTotalPages }}</span>
-                                <button [disabled]="allergiesPage === allergiesTotalPages - 1"
-                                    (click)="onAllergyPageChange(allergiesPage + 1)">
-                                    <i class="material-icons">chevron_right</i>
-                                </button>
-                            </div>
-                        </div>
-                        <ng-template #noAllergies>
-                            <p class="empty-text">Chưa ghi nhận dị ứng.</p>
-                        </ng-template>
-                    </div>
-
-                    <div class="medical-section">
-                        <div class="subsection-header"
-                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                            <h3 style="margin: 0;"><i class="material-icons">monitor_heart</i> Bệnh mãn tính</h3>
-                            <button class="btn-icon add" (click)="addDisease()" *ngIf="!isAddingDisease"
-                                style="background: none; border: none; cursor: pointer; color: #007bff;"
-                                title="Thêm bệnh mãn tính">
-                                <i class="material-icons">add_circle</i>
-                            </button>
-                        </div>
-
-                        <!-- Add Disease Form -->
-                        <div *ngIf="isAddingDisease" class="horizontal-form-row card-like">
-                            <div class="form-inputs">
-                                <input type="text" [(ngModel)]="diseaseForm.diseaseName" placeholder="Tên bệnh"
-                                    class="form-control small">
-                                <input type="date" [(ngModel)]="diseaseForm.diagnosedDate" class="form-control small">
-                                <input type="text" [(ngModel)]="diseaseForm.notes" placeholder="Ghi chú"
-                                    class="form-control small input-notes">
-                            </div>
-                            <div class="form-row-actions">
-                                <button class="btn-icon save-btn" (click)="saveNewDisease()"><i
-                                        class="material-icons">check</i></button>
-                                <button class="btn-icon cancel-btn" (click)="cancelAddDisease()"><i
-                                        class="material-icons">close</i></button>
-                            </div>
-                        </div>
-
-                        <div *ngIf="chronicDiseases.length > 0; else noDiseases" class="list-cards">
-                            <div class="mini-card disease-card" *ngFor="let d of chronicDiseases">
-                                <!-- View Mode -->
-                                <ng-container *ngIf="editingDiseaseId !== d.id">
-                                    <div class="card-content-view">
-                                        <div
-                                            style="display: flex; justify-content: space-between; align-items: flex-start;">
-                                            <div class="info-rows">
-                                                <div class="info-row">
-                                                    <span class="label">Tên bệnh:</span>
-                                                    <span class="value name">{{ d.diseaseName }}</span>
-                                                </div>
-                                                <div class="info-row">
-                                                    <span class="label">Ngày phát hiện:</span>
-                                                    <span class="value">{{ d.diagnosedDate | date:'dd/MM/yyyy' }}</span>
-                                                </div>
-                                                <div class="info-row" *ngIf="d.notes">
-                                                    <span class="label">Ghi chú:</span>
-                                                    <span class="value">{{ d.notes }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="item-actions">
-                                                <button class="btn-icon small" (click)="editDisease(d)"
-                                                    style="background: none; border: none; cursor: pointer; padding: 0 4px;"
-                                                    title="Sửa">
-                                                    <i class="material-icons" style="font-size: 18px;">edit</i>
-                                                </button>
-                                                <button class="btn-icon small delete" (click)="deleteDisease(d)"
-                                                    style="background: none; border: none; cursor: pointer; color: #dc3545; padding: 0 4px;"
-                                                    title="Xóa">
-                                                    <i class="material-icons" style="font-size: 18px;">delete</i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ng-container>
-
-                                <!-- Edit Mode -->
-                                <div *ngIf="editingDiseaseId === d.id" class="horizontal-form-row editing">
-                                    <div class="form-inputs">
-                                        <input type="text" [(ngModel)]="diseaseForm.diseaseName" placeholder="Tên bệnh"
-                                            class="form-control small">
-                                        <input type="date" [(ngModel)]="diseaseForm.diagnosedDate"
-                                            class="form-control small">
-                                        <input type="text" [(ngModel)]="diseaseForm.notes" placeholder="Ghi chú"
-                                            class="form-control small input-notes">
-                                    </div>
-                                    <div class="form-row-actions">
-                                        <button class="btn-icon save-btn" (click)="saveEditDisease()"><i
-                                                class="material-icons">check</i></button>
-                                        <button class="btn-icon cancel-btn" (click)="cancelEditDisease()"><i
-                                                class="material-icons">close</i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pagination small" *ngIf="diseasesTotalPages > 1">
-                                <button [disabled]="diseasesPage === 0" (click)="onDiseasePageChange(diseasesPage - 1)">
-                                    <i class="material-icons">chevron_left</i>
-                                </button>
-                                <span>{{ diseasesPage + 1 }}/{{ diseasesTotalPages }}</span>
-                                <button [disabled]="diseasesPage === diseasesTotalPages - 1"
-                                    (click)="onDiseasePageChange(diseasesPage + 1)">
-                                    <i class="material-icons">chevron_right</i>
-                                </button>
-                            </div>
-                        </div>
-                        <ng-template #noDiseases>
-                            <p class="empty-text">Chưa ghi nhận bệnh mãn tính.</p>
-                        </ng-template>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Overview Tab (Tickets) -->
-            <section class="card tickets-card" *ngIf="activeTab === 'overview'">
-                <div class="card-header">
-                    <h2>Phiếu tiếp đón của tôi</h2>
-                    <button class="btn btn-primary" (click)="loadTickets()" title="Làm mới"
-                        style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; padding: 0;">
-                        <i class="material-icons">refresh</i>
-                    </button>
-                </div>
-
-                <div class="tickets-list">
-                    <div *ngIf="isLoadingTickets" class="loading-spinner">Đang tải phiếu...</div>
-
-                    <div *ngIf="!isLoadingTickets && tickets.length > 0" class="tickets-grid">
-                        <div class="ticket-card" *ngFor="let t of tickets">
-                            <!-- ... existing ticket card content ... -->
-                            <div class="ticket-header">
-                                <div class="queue-number-large">{{ t.queueNumber }}</div>
-                                <div class="ticket-badges">
-                                    <span class="ticket-priority {{t.priority | lowercase}}">{{
-                                        getPriorityDisplay(t.priority) }}</span>
-                                    <span class="ticket-status {{t.status | lowercase}}">{{ getStatusDisplay(t.status)
-                                        }}</span>
-                                </div>
-                            </div>
-                            <div class="ticket-body">
-                                <div class="ticket-info highlight">
-                                    <i class="material-icons">local_hospital</i> <span>{{ t.hospitalName }}</span>
-                                </div>
-                                <div class="ticket-info">
-                                    <i class="material-icons">person</i> <span>BN: {{ t.patientName }}</span>
-                                </div>
-                                <div class="ticket-info">
-                                    <i class="material-icons">medical_services</i> <span>{{ t.specialtyName }}</span>
-                                </div>
-                                <div class="ticket-info">
-                                    <i class="material-icons">medical_services</i> <span>BS. {{ t.doctorName }}</span>
-                                </div>
-                                <div class="ticket-info">
-                                    <i class="material-icons">meeting_room</i> <span>Phòng: {{ t.roomNumber }}</span>
-                                </div>
-                                <div class="ticket-info">
-                                    <span class="payer-badge">{{ getPayerTypeDisplay(t.payerType) }}</span>
-                                </div>
-                                <div class="ticket-info reason" *ngIf="t.reason">
-                                    <i class="material-icons">assignment</i> <span>Lý do: {{ t.reason }}</span>
-                                </div>
-                                <div class="ticket-notes" *ngIf="t.notes">
-                                    Ghi chú: {{ t.notes }}
-                                </div>
-                            </div>
-                            <div class="ticket-footer">
-                                <div class="time-badge">
-                                    <i class="material-icons">schedule</i> Dự kiến: {{ t.estimatedTime | date:'HH:mm' }}
-                                </div>
-                                <span>{{ t.createdAt | date:'dd/MM/yyyy' }}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Ticket Pagination -->
-                    <div class="pagination" *ngIf="ticketsTotalPages > 1">
-                        <button [disabled]="ticketsPage === 0" (click)="onTicketPageChange(ticketsPage - 1)">
-                            <i class="material-icons">chevron_left</i>
-                        </button>
-                        <span>Trang {{ ticketsPage + 1 }} / {{ ticketsTotalPages }}</span>
-                        <button [disabled]="ticketsPage === ticketsTotalPages - 1"
-                            (click)="onTicketPageChange(ticketsPage + 1)">
-                            <i class="material-icons">chevron_right</i>
-                        </button>
-                    </div>
-
-                    <div *ngIf="!isLoadingTickets && tickets.length === 0" class="empty-state">
-                        <p>Không tìm thấy phiếu nào. Vui lòng điều chỉnh bộ lọc và nhấn Làm mới.</p>
-                    </div>
-                </div>
-            </section>
-
+        <div class="dashboard-content">
+            <router-outlet></router-outlet>
         </div>
-
-        <ng-template #loadingTpl>
-            <div class="full-loading">Đang tải hồ sơ của bạn...</div>
-        </ng-template>
     </main>
 </div>
