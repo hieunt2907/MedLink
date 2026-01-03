@@ -1,0 +1,108 @@
+<div class="card">
+    <div class="actions-bar">
+        <div class="search-box">
+            <input type="text" placeholder="Tìm kiếm..." [(ngModel)]="keyword" (keyup.enter)="loadDoctors()">
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <button class="btn-pill btn-warning" *ngIf="selectedDoctorIds.size === 1" (click)="editSelectedDoctor()">
+                <i class="material-icons">edit</i> Sửa
+            </button>
+            <button class="btn-pill btn-danger" *ngIf="selectedDoctorIds.size > 0" (click)="deleteSelectedDoctors()">
+                <i class="material-icons">delete</i> Xóa
+            </button>
+            <button class="btn-add" (click)="openModal()">
+                <i class="material-icons">add</i> Thêm mới
+            </button>
+        </div>
+    </div>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" (change)="toggleAllDoctors($event)">
+                </th>
+                <th>Họ tên</th>
+                <th>Chuyên khoa</th>
+                <th>Bệnh viện</th>
+                <th>Kinh nghiệm</th>
+                <th>Trình độ</th>
+                <th>Xem lịch khám</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let d of doctors">
+                <td>
+                    <input type="checkbox" [checked]="isDoctorSelected(d.id)" (change)="toggleDoctorSelection(d.id)">
+                </td>
+                <td>{{ d.fullName }}</td>
+                <td>{{ d.specialtyName }}</td>
+                <td>{{ d.hospitalName }}</td>
+                <td>{{ d.experienceYears }} năm</td>
+                <td>{{ d.qualifications }}</td>
+                <td>
+                    <button class="btn-action btn-edit" (click)="viewSchedule(d)" title="Xem lịch">
+                        <i class="material-icons">calendar_today</i>
+                    </button>
+                </td>
+            </tr>
+            <tr *ngIf="doctors.length === 0">
+                <td colspan="8" class="text-center">Không có dữ liệu</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="pagination" *ngIf="totalPages > 1">
+        <button [disabled]="page === 0" (click)="onPageChange(page - 1)">
+            <i class="material-icons">chevron_left</i>
+        </button>
+        <span>Trang {{ page + 1 }} / {{ totalPages }}</span>
+        <button [disabled]="page === totalPages - 1" (click)="onPageChange(page + 1)">
+            <i class="material-icons">chevron_right</i>
+        </button>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" *ngIf="showModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>{{ currentDoctorId ? 'Cập nhật Hồ Sơ Bác Sĩ' : 'Tạo Hồ Sơ Bác Sĩ Mới' }}</h2>
+            <button class="close-btn" (click)="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+                <label>Tài khoản người dùng (*)</label>
+                <select class="form-control" [(ngModel)]="doctorForm.userId" [disabled]="!!currentDoctorId">
+                    <option [ngValue]="null">-- Chọn tài khoản --</option>
+                    <option *ngFor="let u of doctorUsers" [ngValue]="u.id">{{ u.fullName }} ({{ u.username }})</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Kinh nghiệm (năm)</label>
+                <input type="number" class="form-control" [(ngModel)]="doctorForm.experienceYears">
+            </div>
+            <div class="form-group">
+                <label>Bệnh viện (*)</label>
+                <select class="form-control" [(ngModel)]="doctorForm.hospitalId" (change)="onDoctorHospitalChange()">
+                    <option [ngValue]="null">-- Chọn bệnh viện --</option>
+                    <option *ngFor="let h of filterHospitalsList" [ngValue]="h.id">{{ h.name }}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Chuyên khoa (*)</label>
+                <select class="form-control" [(ngModel)]="doctorForm.specialtyId" [disabled]="!doctorForm.hospitalId">
+                    <option [ngValue]="null">-- Chọn chuyên khoa --</option>
+                    <option *ngFor="let s of filterSpecialtiesList" [ngValue]="s.id">{{ s.name }}</option>
+                </select>
+            </div>
+            <div class="form-group" style="grid-column: span 2;">
+                <label>Trình độ / Bằng cấp</label>
+                <textarea class="form-control" rows="3" [(ngModel)]="doctorForm.qualifications"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer" style="padding: 1rem; text-align: right;">
+            <button class="btn-primary" (click)="saveDoctor()">Lưu</button>
+        </div>
+    </div>
+</div>
