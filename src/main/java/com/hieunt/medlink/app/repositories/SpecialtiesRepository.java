@@ -10,10 +10,11 @@ public interface SpecialtiesRepository extends BaseRepository<SpecialtiesEntity,
     boolean existsByName(String name);
 
     @Query(value = """
-            select
-                s.id          as id,
-                s.name        as name,
-                s.description as description
+            select s.id,
+            s.name,
+            s.hospital_id,
+            s.description,
+            s.status
             from specialties s
             where
                 s.hospital_id = :hospitalId

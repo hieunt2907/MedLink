@@ -1,0 +1,74 @@
+<section class="card tickets-card">
+    <div class="card-header">
+        <h2>Phiếu tiếp đón của tôi</h2>
+        <button class="btn btn-primary" (click)="loadTickets()" title="Làm mới"
+            style="display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; padding: 0;">
+            <i class="material-icons">refresh</i>
+        </button>
+    </div>
+
+    <div class="tickets-list">
+        <div *ngIf="isLoadingTickets" class="loading-spinner">Đang tải phiếu...</div>
+
+        <div *ngIf="!isLoadingTickets && tickets.length > 0" class="tickets-grid">
+            <div class="ticket-card" *ngFor="let t of tickets">
+                <div class="ticket-header">
+                    <div class="queue-number-large">{{ t.queueNumber }}</div>
+                    <div class="ticket-badges">
+                        <span class="ticket-priority {{t.priority | lowercase}}">{{
+                            getPriorityDisplay(t.priority) }}</span>
+                        <span class="ticket-status {{t.status | lowercase}}">{{ getStatusDisplay(t.status)
+                            }}</span>
+                    </div>
+                </div>
+                <div class="ticket-body">
+                    <div class="ticket-info highlight">
+                        <i class="material-icons">local_hospital</i> <span>{{ t.hospitalName }}</span>
+                    </div>
+                    <div class="ticket-info">
+                        <i class="material-icons">person</i> <span>BN: {{ t.patientName }}</span>
+                    </div>
+                    <div class="ticket-info">
+                        <i class="material-icons">medical_services</i> <span>{{ t.specialtyName }}</span>
+                    </div>
+                    <div class="ticket-info">
+                        <i class="material-icons">person</i> <span>BS. {{ t.doctorName }}</span>
+                    </div>
+                    <div class="ticket-info">
+                        <i class="material-icons">meeting_room</i> <span>Phòng: {{ t.roomNumber }}</span>
+                    </div>
+                    <div class="ticket-info">
+                        <span class="payer-badge">{{ getPayerTypeDisplay(t.payerType) }}</span>
+                    </div>
+                    <div class="ticket-info reason" *ngIf="t.reason">
+                        <i class="material-icons">assignment</i> <span>Lý do: {{ t.reason }}</span>
+                    </div>
+                    <div class="ticket-notes" *ngIf="t.notes">
+                        Ghi chú: {{ t.notes }}
+                    </div>
+                </div>
+                <div class="ticket-footer">
+                    <div class="time-badge">
+                        <i class="material-icons">schedule</i> Dự kiến: {{ t.estimatedTime | date:'HH:mm' }}
+                    </div>
+                    <span>{{ t.createdAt | date:'dd/MM/yyyy' }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ticket Pagination -->
+        <div class="pagination" *ngIf="ticketsTotalPages > 1">
+            <button [disabled]="ticketsPage === 0" (click)="onTicketPageChange(ticketsPage - 1)">
+                <i class="material-icons">chevron_left</i>
+            </button>
+            <span>Trang {{ ticketsPage + 1 }} / {{ ticketsTotalPages }}</span>
+            <button [disabled]="ticketsPage === ticketsTotalPages - 1" (click)="onTicketPageChange(ticketsPage + 1)">
+                <i class="material-icons">chevron_right</i>
+            </button>
+        </div>
+
+        <div *ngIf="!isLoadingTickets && tickets.length === 0" class="empty-state">
+            <p>Không tìm thấy phiếu nào. Vui lòng điều chỉnh bộ lọc và nhấn Làm mới.</p>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,55 @@
+<div class="patient-layout">
+    <!-- Sidebar / Navigation -->
+    <nav class="sidebar" [class.collapsed]="isSidebarCollapsed">
+        <div class="sidebar-header"
+            style="display: flex; align-items: center; justify-content: center; padding: 0 1rem; margin-bottom: 1rem; min-height: 50px;">
+            <div *ngIf="!isSidebarCollapsed" class="brand" style="margin: 0; border: none; padding: 0;">MedLink</div>
+            <div *ngIf="isSidebarCollapsed" class="brand" style="margin: 0; border: none; padding: 0;">M</div>
+        </div>
+
+        <div class="user-info" *ngIf="user">
+            <div class="avatar-placeholder" [title]="user.fullName">
+                {{ user.fullName.charAt(0) }}
+            </div>
+            <div class="details" *ngIf="!isSidebarCollapsed">
+                <h3>{{ user.fullName }}</h3>
+                <p>Bệnh nhân</p>
+            </div>
+        </div>
+
+        <ul class="nav-links">
+            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" title="Phiếu tiếp đón">
+                <a routerLink="/patient">
+                    <i class="material-icons">description</i>
+                    <span *ngIf="!isSidebarCollapsed">Phiếu tiếp đón</span>
+                </a>
+            </li>
+            <li routerLinkActive="active" title="Hồ sơ y tế">
+                <a routerLink="records">
+                    <i class="material-icons">folder_shared</i>
+                    <span *ngIf="!isSidebarCollapsed">Hồ sơ y tế</span>
+                </a>
+            </li>
+            <li title="Đăng xuất">
+                <a href="javascript:void(0)" (click)="logout()">
+                    <i class="material-icons">logout</i>
+                    <span *ngIf="!isSidebarCollapsed">Đăng xuất</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="top-bar">
+            <h1>Bảng điều khiển dành cho bệnh nhân</h1>
+            <div class="profile-summary" *ngIf="patientProfile">
+                <span class="badge">Mã BN: {{ patientProfile.patientCode }}</span>
+            </div>
+        </header>
+
+        <div class="dashboard-content">
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+</div>

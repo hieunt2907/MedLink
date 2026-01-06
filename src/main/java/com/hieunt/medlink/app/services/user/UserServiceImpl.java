@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService {
         try {
             validateUser(user);
             UserEntity userEntity = userMapper.toEntity(user);
+            if(userEntity != null)
             userRepository.save(userEntity);
             userRoleService.createUserRole(user, userEntity);
             UserResponse userResponse = userRepository.getUser(userEntity.getId());
@@ -74,7 +75,9 @@ public class UserServiceImpl implements UserService {
                 throw new RuntimeException("email already exists");
             }
             UserEntity updatedUser = userMapper.toEntity(user, existingUser);
-            userRepository.save(updatedUser);
+            if (updatedUser != null) {
+                userRepository.save(updatedUser);
+            }
             UserResponse userResponse = userRepository.getUser(updatedUser.getId());
             return new BaseResponse<>("updating me successfully", userResponse);
         } catch (Exception e) {

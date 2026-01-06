@@ -11,19 +11,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/super_admin/hospitals")
+@RequestMapping("/api/v1/super-admin/hospitals")
 @RequiredArgsConstructor
 public class SuperAdminHospitalController {
     private final HospitalService hospitalService;
 
     @PostMapping("/")
-    public ResponseEntity<BaseResponse<HospitalEntity>> createHospital(HospitalRequest request) {
+    public ResponseEntity<BaseResponse<HospitalEntity>> createHospital(@RequestBody HospitalRequest request) {
         BaseResponse<HospitalEntity> response = hospitalService.createHospital(request);
         return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BaseResponse<HospitalEntity>> updateHospital(@PathVariable Long id, HospitalRequest request) {
+    public ResponseEntity<BaseResponse<HospitalEntity>> updateHospital(@PathVariable Long id, @RequestBody HospitalRequest request) {
         BaseResponse<HospitalEntity> response = hospitalService.updateHospital(id, request);
         return ResponseEntity.ok(response);
     }

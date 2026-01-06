@@ -12,70 +12,71 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class UserMapper {
     private final PasswordGenerator passwordGenerator;
+
     public UserEntity toEntity(UserCreateRequest user) {
-        if ( user == null ) {
+        if (user == null) {
             return null;
         }
 
         UserEntity userEntity = new UserEntity();
 
-        userEntity.setUsername( user.getUsername().toLowerCase() );
-        userEntity.setEmail( user.getEmail().toLowerCase() );
-        userEntity.setPasswordHash(passwordGenerator.encodePassword( user.getPassword() ) );
-        userEntity.setPhone( user.getPhone() );
-        userEntity.setFullName( user.getFullName().toLowerCase() );
-        userEntity.setDateOfBirth( user.getDateOfBirth() );
-        userEntity.setGender( user.getGender() );
-        userEntity.setAddress( user.getAddress().toLowerCase() );
+        userEntity.setUsername(user.getUsername().toLowerCase());
+        userEntity.setEmail(user.getEmail().toLowerCase());
+        userEntity.setPasswordHash(passwordGenerator.encodePassword(user.getPassword()));
+        userEntity.setPhone(user.getPhone());
+        userEntity.setFullName(user.getFullName().toLowerCase());
+        userEntity.setDateOfBirth(user.getDateOfBirth());
+        userEntity.setGender(user.getGender());
+        userEntity.setAddress(user.getAddress().toLowerCase());
 
         return userEntity;
     }
 
     public UserEntity toEntity(AdminUserUpdateRequest user, UserEntity userEntity) {
-        if ( user == null ) {
+        if (user == null) {
             return userEntity;
         }
 
-        if ( user.getPassword() != null ) {
-            userEntity.setPasswordHash(passwordGenerator.encodePassword( user.getPassword() ) );
+        if (user.getPassword() != null) {
+            userEntity.setPasswordHash(passwordGenerator.encodePassword(user.getPassword()));
         }
 
-        if ( user.getStatus() != null ) {
-            userEntity.setStatus( user.getStatus() );
+        if (user.getStatus() != null) {
+            userEntity.setStatus(user.getStatus());
         }
 
         return userEntity;
     }
 
     public UserEntity toEntity(UserUpdateRequest user, UserEntity userEntity) {
-        if ( user == null ) {
+        if (user == null) {
 
             return userEntity;
         }
 
-        if ( user.getEmail() != null ) {
-            userEntity.setEmail( user.getEmail().toLowerCase() );
+        if (user.getEmail() != null) {
+            userEntity.setEmail(user.getEmail().toLowerCase());
         }
-        if ( user.getPhone() != null ) {
-            userEntity.setPhone( user.getPhone() );
+        if (user.getPhone() != null) {
+            userEntity.setPhone(user.getPhone());
         }
-        if ( user.getFullName() != null ) {
-            userEntity.setFullName( user.getFullName().toLowerCase() );
+        if (user.getFullName() != null) {
+            userEntity.setFullName(user.getFullName().toLowerCase());
         }
-        if ( user.getDateOfBirth() != null ) {
-            userEntity.setDateOfBirth( user.getDateOfBirth() );
+        if (user.getDateOfBirth() != null) {
+            userEntity.setDateOfBirth(user.getDateOfBirth());
         }
-        if ( user.getGender() != null ) {
-            userEntity.setGender( user.getGender() );
+        if (user.getGender() != null) {
+            userEntity.setGender(user.getGender());
         }
-        if ( user.getAddress() != null ) {
-            userEntity.setAddress( user.getAddress() );
+        if (user.getAddress() != null) {
+            userEntity.setAddress(user.getAddress());
         }
-        if ( user.getAvatarUrl() != null ) {
-            userEntity.setAvatarUrl( user.getAvatarUrl() );
+        if (user.getAvatarUrl() != null) {
+            userEntity.setAvatarUrl(user.getAvatarUrl());
         }
-        if ( user.getTwoFaEnabled() != null ) {
-            userEntity.setTwoFaEnabled( user.getTwoFaEnabled() );
+        if (user.getTwoFaEnabled() != null) {
+            userEntity.setTwoFaEnabled(user.getTwoFaEnabled());
         }
 
         return userEntity;

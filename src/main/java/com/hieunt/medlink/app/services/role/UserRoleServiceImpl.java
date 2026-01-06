@@ -31,6 +31,7 @@ public class UserRoleServiceImpl implements UserRoleService {
         try {
             UserRoleEntity userRoleEntity = userRoleRepository.findByUserId(userId);
             userRoleEntity = userRoleMapper.toEntity(user, userRoleEntity);
+            if (userRoleEntity != null)
             userRoleRepository.save(userRoleEntity);
         } catch (Exception e) {
             throw new RuntimeException("error updating user role: " + e.getMessage(), e);

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SpecialtyRequest {
     private String name;
+    private Long hospitalId;
     private String description;
     private SpecialtiesEntity.SpecialtyStatus status;
 }

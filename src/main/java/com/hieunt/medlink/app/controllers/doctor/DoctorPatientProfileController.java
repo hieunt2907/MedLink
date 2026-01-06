@@ -2,6 +2,7 @@ package com.hieunt.medlink.app.controllers.doctor;
 
 import com.hieunt.medlink.app.entities.PatientProfilesEntity;
 import com.hieunt.medlink.app.responses.BaseResponse;
+import com.hieunt.medlink.app.responses.patient.PatientProfileResponse;
 import com.hieunt.medlink.app.services.patient.PatientProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,9 +24,9 @@ public class DoctorPatientProfileController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<BaseResponse<Page<PatientProfilesEntity>>> filterPatientProfiles(@RequestParam(required = false) String keyword, @PageableDefault(size = 20) Pageable pageable) {
+    public ResponseEntity<BaseResponse<Page<PatientProfileResponse>>> filterPatientProfiles(@RequestParam(required = false) String keyword, @PageableDefault(size = 20) Pageable pageable) {
 
-        BaseResponse<Page<PatientProfilesEntity>> response = patientProfileService.filterPatientProfiles(keyword, pageable);
+        BaseResponse<Page<PatientProfileResponse>> response = patientProfileService.filterPatientProfiles(keyword, pageable);
         return ResponseEntity.ok(response);
     }
 }

@@ -8,6 +8,7 @@ import com.hieunt.medlink.app.repositories.PatientAllergiesRepository;
 import com.hieunt.medlink.app.repositories.PatientProfileRepository;
 import com.hieunt.medlink.app.requests.patient.PatientAllergiesRequest;
 import com.hieunt.medlink.app.responses.BaseResponse;
+import com.hieunt.medlink.pkg.error.ResourceNotFoundException;
 import com.hieunt.medlink.pkg.utils.GetCurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,82 +25,70 @@ public class PatientAllergiesServiceImpl implements PatientAllergiesService {
 
     @Override
     public BaseResponse<PatientAllergiesEntity> createPatientAllergy(PatientAllergiesRequest request) {
-        try {
-            UserEntity user = getCurrentUser.getCurrentUser();
-            PatientProfilesEntity patientProfile = patientProfileRepository.findByUserId(user.getId());
-            if (patientProfile == null) {
-                throw new RuntimeException("patient profile not found for the current user");
-            }
+        UserEntity user = getCurrentUser.getCurrentUser();
+        PatientProfilesEntity patientProfile = patientProfileRepository.findByUserId(user.getId());
 
-            PatientAllergiesEntity allergy = patientAllergiesMapper.toEntity(request);
-            allergy.setPatientProfileId(patientProfile.getId());
-            patientAllergiesRepository.save(allergy);
-            return new BaseResponse<>("creating patient allergy successfully", allergy);
-        } catch (Exception e) {
-            throw new RuntimeException("error creating patient allergy: " + e.getMessage(), e);
+        if (patientProfile == null) {
+            throw new ResourceNotFoundException("Patient profile not found for the current user");
         }
+
+        PatientAllergiesEntity allergy = patientAllergiesMapper.toEntity(request);
+        allergy.setPatientProfileId(patientProfile.getId());
+        patientAllergiesRepository.save(allergy);
+
+        return new BaseResponse<>("creating patient allergy successfully", allergy);
     }
 
     @Override
     public BaseResponse<PatientAllergiesEntity> updatePatientAllergy(Long id, PatientAllergiesRequest request) {
-        try {
-            PatientAllergiesEntity allergies = getPatientAllergy(id).getData();
-            if (allergies == null) {
-                throw new RuntimeException("patient allergy not found for the current user");
-            }
+        PatientAllergiesEntity allergies = getPatientAllergy(id).getData();
 
-            patientAllergiesMapper.toEntity(request, allergies);
-            patientAllergiesRepository.save(allergies);
-            return new BaseResponse<>("updating patient allergy successfully", allergies);
-        } catch (Exception e) {
-            throw new RuntimeException("error updating patient allergy: " + e.getMessage(), e);
+        if (allergies == null) {
+            throw new ResourceNotFoundException("Patient Allergy not found");
         }
+
+        patientAllergiesMapper.toEntity(request, allergies);
+        patientAllergiesRepository.save(allergies);
+
+        return new BaseResponse<>("updating patient allergy successfully", allergies);
     }
 
     @Override
     public BaseResponse<Page<PatientAllergiesEntity>> filterMyAllergies(Pageable pageable) {
-        try {
-            UserEntity user = getCurrentUser.getCurrentUser();
-            PatientProfilesEntity patientProfile = patientProfileRepository.findByUserId(user.getId());
-            if (patientProfile == null) {
-                throw new RuntimeException("patient profile not found for the current user");
-            }
-            Page<PatientAllergiesEntity> allergies = patientAllergiesRepository.filterAllergies(patientProfile.getId(), pageable);
-            return new BaseResponse<>("filtering patient allergies successfully", allergies);
+        UserEntity user = getCurrentUser.getCurrentUser();
+        PatientProfilesEntity patientProfile = patientProfileRepository.findByUserId(user.getId());
 
-        } catch (Exception e) {
-            throw new RuntimeException("error filtering patient allergies: " + e.getMessage(), e);
+        if (patientProfile == null) {
+            throw new ResourceNotFoundException("Patient profile not found for the current user");
         }
+
+        Page<PatientAllergiesEntity> allergies = patientAllergiesRepository.filterAllergies(patientProfile.getId(),
+                pageable);
+        return new BaseResponse<>("filtering patient allergies successfully", allergies);
     }
 
     @Override
     public BaseResponse<PatientAllergiesEntity> deletePatientAllergy(Long id) {
-        try {
-            PatientAllergiesEntity allergy = patientAllergiesRepository.findById(id).orElseThrow(() -> new RuntimeException("patient allergy not found"));
+        PatientAllergiesEntity allergy = getPatientAllergy(id).getData();
+
+        if (allergy != null) {
             patientAllergiesRepository.delete(allergy);
-            return new BaseResponse<>("deleting patient allergy successfully", allergy);
-        } catch (Exception e) {
-            throw new RuntimeException("error deleting patient allergy: " + e.getMessage(), e);
         }
+
+        return new BaseResponse<>("deleting patient allergy successfully", allergy);
     }
 
     @Override
     public BaseResponse<Page<PatientAllergiesEntity>> filterAllergies(Long patientProfileId, Pageable pageable) {
-        try {
-            Page<PatientAllergiesEntity> allergies = patientAllergiesRepository.filterAllergies(patientProfileId, pageable);
-            return new BaseResponse<>("filtering patient allergies successfully", allergies);
-        } catch (Exception e) {
-            throw new RuntimeException("error filtering patient allergies: " + e.getMessage(), e);
-        }
+        Page<PatientAllergiesEntity> allergies = patientAllergiesRepository.filterAllergies(patientProfileId, pageable);
+        return new BaseResponse<>("filtering patient allergies successfully", allergies);
     }
 
     @Override
     public BaseResponse<PatientAllergiesEntity> getPatientAllergy(Long id) {
-        try {
-            PatientAllergiesEntity allergy = patientAllergiesRepository.findById(id).orElseThrow(() -> new RuntimeException("patient allergy not found"));
-            return new BaseResponse<>("getting patient allergy successfully", allergy);
-        } catch (Exception e) {
-            throw new RuntimeException("error getting patient allergy: " + e.getMessage(), e);
-        }
+        PatientAllergiesEntity allergy = patientAllergiesRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Patient Allergy not found"));
+
+        return new BaseResponse<>("getting patient allergy successfully", allergy);
     }
 }

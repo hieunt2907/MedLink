@@ -11,6 +11,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class PatientChronicDiseaseRequest {
     private String diseaseName;
-    private LocalDate diagnosisDate;
+    private LocalDate diagnosedDate;
     private String notes;
 }
