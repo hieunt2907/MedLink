@@ -42,12 +42,6 @@ public class DoctorLabOrdersController {
         return ResponseEntity.ok(labOrdersService.getLabOrderByOrderNumber(orderNumber));
     }
 
-    @GetMapping("/medical-record/{medicalRecordId}")
-    public ResponseEntity<BaseResponse<Page<LabOrdersEntity>>> getLabOrdersByMedicalRecordId(
-            @PathVariable Long medicalRecordId,
-            @PageableDefault(size = 20) Pageable pageable) {
-        return ResponseEntity.ok(labOrdersService.getLabOrdersByMedicalRecordId(medicalRecordId, pageable));
-    }
 
     @GetMapping("/my-orders")
     public ResponseEntity<BaseResponse<Page<LabOrdersEntity>>> getMyDoctorLabOrders(
