@@ -1,4 +1,4 @@
-package com.hieunt.medlink.app.controllers.doctor;
+package com.hieunt.medlink.app.controllers.technician;
 
 import com.hieunt.medlink.app.entities.LabOrdersEntity;
 import com.hieunt.medlink.app.requests.lab_order.LabOrdersRequest;
@@ -13,16 +13,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/doctor/lab-orders")
+@RequestMapping("/api/v1/technician/lab-orders")
 @RequiredArgsConstructor
-public class DoctorLabOrdersController {
+public class TechnicianLabOrdersController {
     private final LabOrdersService labOrdersService;
-
-    @PostMapping("/")
-    public ResponseEntity<BaseResponse<LabOrdersEntity>> createLabOrder(
-            @RequestBody LabOrdersRequest request) {
-        return ResponseEntity.ok(labOrdersService.createLabOrder(request));
-    }
 
     @PutMapping("/{id}")
     public ResponseEntity<BaseResponse<LabOrdersEntity>> updateLabOrder(
@@ -43,22 +37,15 @@ public class DoctorLabOrdersController {
     }
 
 
-    @GetMapping("/my-orders")
-    public ResponseEntity<BaseResponse<Page<LabOrdersEntity>>> getMyDoctorLabOrders(
-            @PageableDefault(size = 20) Pageable pageable) {
-        return ResponseEntity.ok(labOrdersService.getMyDoctorLabOrders(pageable));
-    }
-
     @GetMapping("/filter")
     public ResponseEntity<BaseResponse<Page<LabOrdersResponse>>> filterLabOrders(
-            @RequestParam(required = false) Long medicalRecordId,
             @RequestParam(required = false) Long specialtyId,
             @RequestParam(required = false) String status,
             @RequestParam(required = false) String urgency,
             @RequestParam(required = false, defaultValue = "") String keyword,
             @PageableDefault(size = 20) Pageable pageable) {
         BaseResponse<Page<LabOrdersResponse>> response = labOrdersService.filterLabOrders(
-                medicalRecordId, null, null, specialtyId, status, urgency, keyword, pageable);
+                null, null, null, specialtyId, status, urgency, keyword, pageable);
         return ResponseEntity.ok(response);
     }
 }

@@ -20,11 +20,7 @@ public interface LabOrdersService {
 
     BaseResponse<LabOrdersEntity> deleteLabOrder(Long id);
 
-    BaseResponse<Page<LabOrdersEntity>> getLabOrdersByMedicalRecordId(Long medicalRecordId, Pageable pageable);
-
     BaseResponse<Page<LabOrdersEntity>> getMyDoctorLabOrders(Pageable pageable);
-
-    BaseResponse<Page<LabOrdersEntity>> getMyLabDoctorLabOrders(Pageable pageable);
 
     BaseResponse<Page<LabOrdersResponse>> filterLabOrders(
             Long medicalRecordId,

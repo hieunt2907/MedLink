@@ -1,12 +1,13 @@
 package com.hieunt.medlink.app.services.hospital;
 
 import com.hieunt.medlink.app.mappers.RoomMapper;
-import com.hieunt.medlink.pkg.error.ResourceNotFoundException;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.hieunt.medlink.app.entities.RoomEntity;
+import com.hieunt.medlink.app.errors.ResourceNotFoundException;
 import com.hieunt.medlink.app.repositories.RoomRepository;
 import com.hieunt.medlink.app.requests.hospital.RoomRequest;
 import com.hieunt.medlink.app.responses.BaseResponse;

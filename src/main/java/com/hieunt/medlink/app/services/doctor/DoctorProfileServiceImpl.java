@@ -2,13 +2,13 @@ package com.hieunt.medlink.app.services.doctor;
 
 import com.hieunt.medlink.app.entities.DoctorProfileEntity;
 import com.hieunt.medlink.app.entities.UserEntity;
+import com.hieunt.medlink.app.errors.ResourceNotFoundException;
 import com.hieunt.medlink.app.mappers.DoctorProfileMapper;
 import com.hieunt.medlink.app.repositories.DoctorProfileRepository;
 import com.hieunt.medlink.app.requests.doctor.DoctorProfileRequest;
 import com.hieunt.medlink.app.responses.BaseResponse;
 import com.hieunt.medlink.app.responses.doctor.DoctorProfileResponse;
-import com.hieunt.medlink.pkg.error.ResourceNotFoundException;
-import com.hieunt.medlink.pkg.utils.GetCurrentUser;
+import com.hieunt.medlink.app.utils.GetCurrentUser;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

@@ -4,7 +4,8 @@ import com.hieunt.medlink.app.entities.UserEntity;
 import com.hieunt.medlink.app.requests.user.AdminUserUpdateRequest;
 import com.hieunt.medlink.app.requests.user.UserCreateRequest;
 import com.hieunt.medlink.app.requests.user.UserUpdateRequest;
-import com.hieunt.medlink.pkg.utils.PasswordGenerator;
+import com.hieunt.medlink.app.utils.PasswordGenerator;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
