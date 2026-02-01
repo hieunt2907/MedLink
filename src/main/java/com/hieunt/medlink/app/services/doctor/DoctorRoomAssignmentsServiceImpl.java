@@ -2,12 +2,13 @@ package com.hieunt.medlink.app.services.doctor;
 
 import com.hieunt.medlink.app.entities.DoctorProfileEntity;
 import com.hieunt.medlink.app.entities.DoctorRoomAssignmentsEntity;
+import com.hieunt.medlink.app.errors.ResourceNotFoundException;
 import com.hieunt.medlink.app.mappers.DoctorRoomAssignmentsMapper;
 import com.hieunt.medlink.app.repositories.DoctorRoomAssignmentsRepository;
 import com.hieunt.medlink.app.requests.doctor.DoctorRoomAssignmentsRequest;
 import com.hieunt.medlink.app.responses.BaseResponse;
 import com.hieunt.medlink.app.responses.doctor.DoctorRoomAssignmentResponse;
-import com.hieunt.medlink.pkg.error.ResourceNotFoundException;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
