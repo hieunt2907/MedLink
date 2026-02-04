@@ -1,11 +1,12 @@
 package com.hieunt.medlink.app.services.hospital;
 
 import com.hieunt.medlink.app.entities.SpecialtiesEntity;
+import com.hieunt.medlink.app.errors.ResourceNotFoundException;
 import com.hieunt.medlink.app.mappers.SpecialtiesMapper;
 import com.hieunt.medlink.app.repositories.SpecialtiesRepository;
 import com.hieunt.medlink.app.requests.hospital.SpecialtyRequest;
 import com.hieunt.medlink.app.responses.BaseResponse;
-import com.hieunt.medlink.pkg.error.ResourceNotFoundException;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
