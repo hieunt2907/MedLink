@@ -2,13 +2,13 @@ package com.hieunt.medlink.app.services.lab_order;
 
 import com.hieunt.medlink.app.entities.LabOrdersEntity;
 import com.hieunt.medlink.app.entities.UserEntity;
+import com.hieunt.medlink.app.errors.ResourceNotFoundException;
 import com.hieunt.medlink.app.mappers.LabOrdersMapper;
 import com.hieunt.medlink.app.repositories.LabOrdersRepository;
 import com.hieunt.medlink.app.requests.lab_order.LabOrdersRequest;
 import com.hieunt.medlink.app.responses.BaseResponse;
 import com.hieunt.medlink.app.responses.lab_order.LabOrdersResponse;
-import com.hieunt.medlink.pkg.error.ResourceNotFoundException;
-import com.hieunt.medlink.pkg.utils.GetCurrentUser;
+import com.hieunt.medlink.app.utils.GetCurrentUser;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -81,24 +81,12 @@ public class LabOrdersServiceImpl implements LabOrdersService {
         throw new ResourceNotFoundException("Lab order not found with id: " + id);
     }
 
-    @Override
-    public BaseResponse<Page<LabOrdersEntity>> getLabOrdersByMedicalRecordId(Long medicalRecordId, Pageable pageable) {
-        Page<LabOrdersEntity> labOrders = labOrdersRepository.findByMedicalRecordId(medicalRecordId, pageable);
-        return new BaseResponse<>("Getting lab orders by medical record successfully", labOrders);
-    }
 
     @Override
     public BaseResponse<Page<LabOrdersEntity>> getMyDoctorLabOrders(Pageable pageable) {
         UserEntity user = getCurrentUser.getCurrentUser();
         Page<LabOrdersEntity> labOrders = labOrdersRepository.findByDoctorId(user.getId(), pageable);
         return new BaseResponse<>("Getting doctor's lab orders successfully", labOrders);
-    }
-
-    @Override
-    public BaseResponse<Page<LabOrdersEntity>> getMyLabDoctorLabOrders(Pageable pageable) {
-        UserEntity user = getCurrentUser.getCurrentUser();
-        Page<LabOrdersEntity> labOrders = labOrdersRepository.findByLabDoctorId(user.getId(), pageable);
-        return new BaseResponse<>("Getting lab doctor's lab orders successfully", labOrders);
     }
 
     @Override
