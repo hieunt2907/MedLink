@@ -2,13 +2,13 @@ package com.hieunt.medlink.app.services.medical_record;
 
 import com.hieunt.medlink.app.entities.MedicalRecordsEntity;
 import com.hieunt.medlink.app.entities.UserEntity;
+import com.hieunt.medlink.app.errors.ResourceNotFoundException;
 import com.hieunt.medlink.app.mappers.MedicalRecordsMapper;
 import com.hieunt.medlink.app.repositories.MedicalRecordsRepository;
 import com.hieunt.medlink.app.requests.medical_record.MedicalRecordsRequest;
 import com.hieunt.medlink.app.responses.BaseResponse;
 import com.hieunt.medlink.app.responses.medical_record.MedicalRecordsResponse;
-import com.hieunt.medlink.pkg.error.ResourceNotFoundException;
-import com.hieunt.medlink.pkg.utils.GetCurrentUser;
+import com.hieunt.medlink.app.utils.GetCurrentUser;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
