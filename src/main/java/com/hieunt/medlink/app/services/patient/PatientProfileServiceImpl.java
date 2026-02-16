@@ -2,14 +2,15 @@ package com.hieunt.medlink.app.services.patient;
 
 import com.hieunt.medlink.app.entities.PatientProfilesEntity;
 import com.hieunt.medlink.app.entities.UserEntity;
+import com.hieunt.medlink.app.errors.DuplicateResourceException;
+import com.hieunt.medlink.app.errors.ResourceNotFoundException;
 import com.hieunt.medlink.app.mappers.PatientProfileMapper;
 import com.hieunt.medlink.app.repositories.PatientProfileRepository;
 import com.hieunt.medlink.app.requests.patient.PatientProfileRequest;
 import com.hieunt.medlink.app.responses.BaseResponse;
 import com.hieunt.medlink.app.responses.patient.PatientProfileResponse;
-import com.hieunt.medlink.pkg.error.DuplicateResourceException;
-import com.hieunt.medlink.pkg.error.ResourceNotFoundException;
-import com.hieunt.medlink.pkg.utils.GetCurrentUser;
+import com.hieunt.medlink.app.utils.GetCurrentUser;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

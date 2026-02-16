@@ -9,7 +9,8 @@ import com.hieunt.medlink.app.requests.user.UserUpdateRequest;
 import com.hieunt.medlink.app.responses.BaseResponse;
 import com.hieunt.medlink.app.responses.user.UserResponse;
 import com.hieunt.medlink.app.services.role.UserRoleService;
-import com.hieunt.medlink.pkg.utils.GetCurrentUser;
+import com.hieunt.medlink.app.utils.GetCurrentUser;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

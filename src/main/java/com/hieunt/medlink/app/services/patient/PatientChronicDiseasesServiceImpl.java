@@ -3,13 +3,14 @@ package com.hieunt.medlink.app.services.patient;
 import com.hieunt.medlink.app.entities.PatientChronicDiseasesEntity;
 import com.hieunt.medlink.app.entities.PatientProfilesEntity;
 import com.hieunt.medlink.app.entities.UserEntity;
+import com.hieunt.medlink.app.errors.ResourceNotFoundException;
 import com.hieunt.medlink.app.mappers.PatientChronicDiseasesMapper;
 import com.hieunt.medlink.app.repositories.PatientChronicDiseasesRepository;
 import com.hieunt.medlink.app.repositories.PatientProfileRepository;
 import com.hieunt.medlink.app.requests.patient.PatientChronicDiseaseRequest;
 import com.hieunt.medlink.app.responses.BaseResponse;
-import com.hieunt.medlink.pkg.error.ResourceNotFoundException;
-import com.hieunt.medlink.pkg.utils.GetCurrentUser;
+import com.hieunt.medlink.app.utils.GetCurrentUser;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
