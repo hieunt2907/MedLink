@@ -49,6 +49,7 @@ public class LabResultsServiceImpl implements LabResultsService {
 
         throw new ResourceNotFoundException("Lab result not found with id: " + id);
     }
+    
 
     @Override
     public BaseResponse<LabResultsEntity> getLabResultById(Long id) {
