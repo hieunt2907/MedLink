@@ -33,7 +33,9 @@ public class LabOrdersMapper {
             return entity;
         }
 
-
+        if (request.getMedicalRecordId() != null) {
+            entity.setMedicalRecordId(request.getMedicalRecordId());
+        }
 
         if (request.getDoctorId() != null) {
             entity.setDoctorId(request.getDoctorId());
