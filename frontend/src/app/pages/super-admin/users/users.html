@@ -1,0 +1,66 @@
+<div class="card">
+    <div class="actions-bar">
+        <div class="search-box">
+            <input type="text" placeholder="Tìm kiếm..." [(ngModel)]="keyword" (keyup.enter)="loadUsers()">
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <button class="btn-pill btn-danger" *ngIf="selectedUserIds.size > 0" (click)="deleteSelectedUsers()">
+                <i class="material-icons">delete</i> Xóa
+            </button>
+            <button class="btn-add" (click)="openModal()">
+                <i class="material-icons">add</i> Thêm mới
+            </button>
+        </div>
+    </div>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" (change)="toggleAllUsers($event)">
+                </th>
+                <th>Tên đăng nhập</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Vai trò</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let u of users">
+                <td>
+                    <input type="checkbox" [checked]="isUserSelected(u.id)" (change)="toggleUserSelection(u.id)">
+                </td>
+                <td>{{ u.username }}</td>
+                <td>{{ u.fullName }}</td>
+                <td>{{ u.email }}</td>
+                <td>{{ u.role }}</td>
+            </tr>
+            <tr *ngIf="users.length === 0">
+                <td colspan="6" class="text-center">Không có dữ liệu</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="pagination" *ngIf="totalPages > 1">
+        <button [disabled]="page === 0" (click)="onPageChange(page - 1)">
+            <i class="material-icons">chevron_left</i>
+        </button>
+        <span>Trang {{ page + 1 }} / {{ totalPages }}</span>
+        <button [disabled]="page === totalPages - 1" (click)="onPageChange(page + 1)">
+            <i class="material-icons">chevron_right</i>
+        </button>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" *ngIf="showModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Thêm người dùng mới</h2>
+            <button class="close-btn" (click)="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Chức năng tạo người dùng đang được cập nhật.</p>
+        </div>
+    </div>
+</div>

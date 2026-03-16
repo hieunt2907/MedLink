@@ -1,0 +1,171 @@
+<div class="card">
+    <div class="actions-bar">
+        <div class="filters">
+            <select class="form-control" [(ngModel)]="ticketFilters.hospitalId" (change)="onFilterHospitalChange()"
+                style="width: 150px;">
+                <option [ngValue]="null">-- Bệnh viện --</option>
+                <option *ngFor="let h of filterHospitalsList" [ngValue]="h.id">{{ h.name }}</option>
+            </select>
+            <select class="form-control" [(ngModel)]="ticketFilters.specialtyId" (change)="onFilterSpecialtyChange()"
+                [disabled]="!ticketFilters.hospitalId" style="width: 150px;">
+                <option [ngValue]="null">-- Chuyên khoa --</option>
+                <option *ngFor="let s of filterSpecialtiesList" [ngValue]="s.id">{{ s.name }}</option>
+            </select>
+            <select class="form-control" [(ngModel)]="ticketFilters.roomId" (change)="onFilterRoomChange()"
+                [disabled]="!ticketFilters.specialtyId" style="width: 150px;">
+                <option [ngValue]="null">-- Phòng --</option>
+                <option *ngFor="let r of filterRoomsList" [ngValue]="r.id">{{ r.roomNumber }}</option>
+            </select>
+            <select class="form-control" [(ngModel)]="ticketFilters.doctorId" (change)="onFilterDoctorChange()"
+                [disabled]="!ticketFilters.specialtyId" style="width: 150px;">
+                <option [ngValue]="null">-- Bác sĩ --</option>
+                <option *ngFor="let d of filterDoctorsList" [ngValue]="d.userId">{{ d.fullName }}</option>
+            </select>
+            <button class="btn-filter-clear" *ngIf="hasActiveFilters()" (click)="clearFilters()" title="Xóa bộ lọc">
+                <i class="material-icons" style="font-size: 18px;">filter_alt_off</i>
+                <span>Xóa bộ lọc</span>
+            </button>
+        </div>
+        <div class="search-box">
+            <input type="text" placeholder="Tìm kiếm..." [(ngModel)]="keyword" (keyup.enter)="loadTickets()">
+        </div>
+        <!-- Add Ticket Button if needed, usually creating ticket starts from Patient view -->
+    </div>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Số phiếu</th>
+                <th>Bệnh nhân</th>
+                <th>Bệnh viện</th>
+                <th>Chuyên khoa</th>
+                <th>Phòng</th>
+                <th>Bác sĩ</th>
+                <th>Trạng thái</th>
+                <th>Ngày tạo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let t of tickets">
+                <td>{{ t.queueNumber }}</td>
+                <td>{{ t.patientName }}</td>
+                <td>{{ t.hospitalName }}</td>
+                <td>{{ t.specialtyName }}</td>
+                <td>{{ t.roomNumber }}</td>
+                <td>{{ t.doctorName }}</td>
+                <td>
+                    <span [ngClass]="{
+                        'status-waiting': t.status === 'waiting',
+                        'status-called': t.status === 'called',
+                        'status-in-progress': t.status === 'in_progress',
+                        'status-completed': t.status === 'completed',
+                        'status-skipped': t.status === 'skipped'
+                    }">{{ t.status }}</span>
+                </td>
+                <td>{{ t.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+            </tr>
+            <tr *ngIf="tickets.length === 0">
+                <td colspan="9" class="text-center">Không có dữ liệu</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="pagination" *ngIf="totalPages > 1">
+        <button [disabled]="page === 0" (click)="onPageChange(page - 1)">
+            <i class="material-icons">chevron_left</i>
+        </button>
+        <span>Trang {{ page + 1 }} / {{ totalPages }}</span>
+        <button [disabled]="page === totalPages - 1" (click)="onPageChange(page + 1)">
+            <i class="material-icons">chevron_right</i>
+        </button>
+    </div>
+</div>
+
+<!-- Ticket Modal -->
+<div class="modal-overlay" *ngIf="showModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Tạo phiếu khám</h2>
+            <button class="close-btn" (click)="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+                <label>Bệnh viện (*)</label>
+                <select class="form-control" [(ngModel)]="ticketForm.hospitalId"
+                    (ngModelChange)="onTicketHospitalChange($event)">
+                    <option [ngValue]="null">-- Chọn bệnh viện --</option>
+                    <option *ngFor="let h of ticketHospitals" [ngValue]="h.id">{{ h.name }}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Chuyên khoa (*)</label>
+                <select class="form-control" [(ngModel)]="ticketForm.specialtyId" (change)="onTicketSpecialtyChange()"
+                    [disabled]="!ticketForm.hospitalId">
+                    <option [ngValue]="null">-- Chọn chuyên khoa --</option>
+                    <option *ngFor="let s of ticketSpecialties" [ngValue]="s.id">{{ s.name }}</option>
+                </select>
+            </div>
+
+            <!-- Room Select -->
+            <div class="form-group">
+                <label>Phòng khám (*)</label>
+                <select class="form-control" [(ngModel)]="ticketForm.roomId" [disabled]="!ticketForm.specialtyId">
+                    <option [ngValue]="null">-- Chọn phòng --</option>
+                    <option *ngFor="let r of ticketRooms" [ngValue]="r.id">{{ r.roomNumber }} - {{
+                        getRoomTypeDisplay(r.roomType) }}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Bác sĩ (Tùy chọn)</label>
+                <select class="form-control" [(ngModel)]="ticketForm.doctorId" [disabled]="!ticketForm.specialtyId">
+                    <option [ngValue]="null">-- Chọn bác sĩ --</option>
+                    <option *ngFor="let d of ticketDoctors" [ngValue]="d.userId">{{ d.fullName }}</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="grid-column: span 2;">
+                <label>Lý do khám (*)</label>
+                <input type="text" class="form-control" [(ngModel)]="ticketForm.reason">
+            </div>
+
+            <div class="form-group">
+                <label>Mức độ ưu tiên (*)</label>
+                <select class="form-control" [(ngModel)]="ticketForm.priority">
+                    <option value="normal">Bình thường</option>
+                    <option value="urgent">Khẩn cấp</option>
+                    <option value="emergency">Cấp cứu</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Loại hình thanh toán (*)</label>
+                <select class="form-control" [(ngModel)]="ticketForm.payerType">
+                    <option value="self_pay">Dịch vụ</option>
+                    <option value="insurance">Bảo hiểm y tế</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Trạng thái</label>
+                <select class="form-control" [(ngModel)]="ticketForm.status">
+                    <option value="waiting">Đang chờ</option>
+                    <option value="called">Đã gọi</option>
+                    <option value="in_progress">Đang khám</option>
+                    <option value="completed">Hoàn thành</option>
+                    <option value="skipped">Bỏ qua</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Thời gian dự kiến</label>
+                <input type="datetime-local" class="form-control" [(ngModel)]="ticketForm.estimatedTime">
+            </div>
+
+            <div class="form-group" style="grid-column: span 2;">
+                <label>Ghi chú</label>
+                <textarea class="form-control" rows="2" [(ngModel)]="ticketForm.notes"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer" style="padding: 1rem; text-align: right;">
+            <button class="btn-primary" (click)="createTicket()">Lưu</button>
+        </div>
+    </div>
+</div>

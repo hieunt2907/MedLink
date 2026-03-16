@@ -1,0 +1,90 @@
+<div class="sub-header">
+    <button class="btn-action" (click)="goBack()" title="Quay lại">
+        <i class="material-icons">arrow_back</i>
+    </button>
+    <h3>Chuyên khoa tại Bệnh viện #{{ hospitalId }}</h3>
+    <div style="display: flex; gap: 10px;">
+        <button class="btn-pill btn-warning" *ngIf="selectedSpecialtyIds.size === 1" (click)="editSelectedSpecialty()">
+            <i class="material-icons">edit</i> Sửa
+        </button>
+        <button class="btn-pill btn-danger" *ngIf="selectedSpecialtyIds.size > 0" (click)="deleteSelectedSpecialties()">
+            <i class="material-icons">delete</i> Xóa
+        </button>
+        <button class="btn-add" (click)="openModal()">
+            <i class="material-icons">add</i> Thêm mới
+        </button>
+    </div>
+</div>
+
+<div class="card">
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" (change)="toggleAllSpecialties($event)">
+                </th>
+                <th>Tên chuyên khoa</th>
+                <th>Mô tả</th>
+                <th>Xem phòng</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let s of specialties">
+                <td>
+                    <input type="checkbox" [checked]="isSpecialtySelected(s.id)"
+                        (change)="toggleSpecialtySelection(s.id)">
+                </td>
+                <td>{{ s.name }}</td>
+                <td>{{ s.description }}</td>
+                <td>
+                    <button class="btn-action btn-edit" (click)="viewRooms(s)" title="Xem phòng">
+                        <i class="material-icons">meeting_room</i>
+                    </button>
+                </td>
+            </tr>
+            <tr *ngIf="specialties.length === 0">
+                <td colspan="5" class="text-center">Bệnh viện này chưa có chuyên khoa nào.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="pagination" *ngIf="totalPages > 1">
+        <button [disabled]="page === 0" (click)="onPageChange(page - 1)">
+            <i class="material-icons">chevron_left</i>
+        </button>
+        <span>Trang {{ page + 1 }} / {{ totalPages }}</span>
+        <button [disabled]="page === totalPages - 1" (click)="onPageChange(page + 1)">
+            <i class="material-icons">chevron_right</i>
+        </button>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" *ngIf="showModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>{{ currentSpecialtyId ? 'Cập nhật Chuyên Khoa' : 'Thêm Chuyên Khoa Mới' }}</h2>
+            <button class="close-btn" (click)="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Tên chuyên khoa (*)</label>
+                <input type="text" class="form-control" [(ngModel)]="specialtyForm.name">
+            </div>
+            <div class="form-group">
+                <label>Mô tả</label>
+                <textarea class="form-control" rows="3" [(ngModel)]="specialtyForm.description"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Trạng thái</label>
+                <select class="form-control" [(ngModel)]="specialtyForm.status">
+                    <option value="active">Hoạt động</option>
+                    <option value="inactive">Không hoạt động</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-footer" style="padding: 1rem; text-align: right;">
+            <button class="btn-primary" (click)="saveSpecialty()">Lưu</button>
+        </div>
+    </div>
+</div>
