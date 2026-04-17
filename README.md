@@ -140,7 +140,7 @@ git clone https://github.com/hieunt2907/MedLink.git
 cd MedLink
 ```
 
-### 2. Khởi động Kafka bằng Docke
+### 2. Khởi động Kafka bằng Docker
 
 ```bash
 # Tạo file docker-compose.yml (nếu chưa có)
